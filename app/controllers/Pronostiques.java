@@ -21,7 +21,7 @@ public class Pronostiques extends Controller  {
 	static Form<Journee> journeeForm = form(Journee.class);
 	
 	public static Result pronostics(String id) {
-		Utilisateur user = Utilisateur.findByNom(request().username());
+		Utilisateur user = Utilisateur.findByPseudo(request().username());
 //		List<Matche> matches = Matche.find.all();
 		List<Journee> journees = Journee.find.all();
 		Long idLong = Long.parseLong(id);
@@ -44,7 +44,7 @@ public class Pronostiques extends Controller  {
 		} else {
 			Pronostique test = filledForm.get();
 			
-			Utilisateur user = Utilisateur.findByNom(request().username());
+			Utilisateur user = Utilisateur.findByPseudo(request().username());
 			test.setUtilisateur(user);
 			
 			Matche matche = Matche.findById(Long.parseLong(idMatche));
