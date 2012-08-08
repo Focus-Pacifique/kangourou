@@ -5,6 +5,7 @@ import models.Utilisateur;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security.Authenticated;
 import views.html.inscription;
 
 public class Utilisateurs extends Controller {

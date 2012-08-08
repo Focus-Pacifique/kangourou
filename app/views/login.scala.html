@@ -18,9 +18,7 @@
 				
 					@helper.inputText(form("pseudo"))
 					@helper.inputPassword(form("password"))
-				}
-			</fieldset>   	
-		   	<div class="row">
+			<div class="row">
 		   		<div class="span1">
 		   			<a href="@routes.Utilisateurs.inscription()" class="btn">S'inscrire</a>
 		   		</div>
@@ -28,6 +26,9 @@
 		   			<button class="btn btn-primary btn-large" type="submit">Login</button>
 		   		</div>
 		   	</div>
+				}
+			</fieldset>   	
+		   	
 	   	</div>
 	</div>
 }

@@ -38,11 +38,11 @@
 								}else{
 									
 									<fieldset>
-										@helper.inputText(pronostiqueForm("pronoEquipe1"))
-										@helper.inputText(pronostiqueForm("pronoEquipe2"))
+										@helper.inputText(pronostiqueForm("pronoEquipe1"), '_label -> matchTemp.equipe1.getNom())
+										@helper.inputText(pronostiqueForm("pronoEquipe2"), '_label -> matchTemp.equipe2.getNom())
 									</fieldset>
 									<div class="actions">
-            							<input type="submit" value="Valid" class="btn"> or <a href="controllers.Pronostiques.pronostics()" class="btn">Cancel</a> 
+            							<input type="submit" value="Valider" class="btn">
      								</div>
       								  
 								}
@@ -61,7 +61,6 @@
 			</table>
 		</div>
 	</div>
-	<input type="submit" value="Voir les matches" class="btn btn-primary btn-large">
 }
 
 <script>
