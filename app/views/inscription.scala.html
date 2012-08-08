@@ -1,0 +1,28 @@
+@(form: Form[Utilisateur])
+
+@main(null) {
+
+	<div class="span4">
+		<fieldset>
+			@helper.form(routes.Utilisateurs.save) {
+	
+	        	<h2>Inscription</h2>
+	
+		        @if(form.hasGlobalErrors) { 
+		            <p class="error">@form.globalError.message</p>
+		        }
+		
+		        @if(flash.contains("success")) {
+		            <p class="success">@flash.get("success")</p>
+		        }
+			
+				@helper.inputText(form("nom"))
+				@helper.inputText(form("prenom"))
+				@helper.inputText(form("pseudo"))
+				@helper.inputPassword(form("password"))
+				<button class="btn" type="submit">Login</button>
+			
+	    }
+		</fieldset>
+   	</div>
+}

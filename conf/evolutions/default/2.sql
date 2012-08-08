@@ -34,13 +34,13 @@ insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur) valu
 insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur) values (9,19,20,null,null,null);
 insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur) values (10,14,9,null,null,null);
 
-insert into Utilisateur (nom,prenom,points,password) values ('toto','toto',0,'toto');
+insert into Utilisateur (pseudo,nom,prenom,points,password) values ('Manoosh','Molle','Alexis',0,'alex');
 
-insert into Pronostique (id,matche,utilisateur,pronoEquipe1,pronoEquipe2) values (1,1,'toto',3,2);
+insert into Pronostique (id,matche,utilisateur,pronoEquipe1,pronoEquipe2) values (1,1,'Manoosh',3,2);
 
 # --- !Downs
 
 delete from Pronostique;
-delete from Match;
+delete from Matche;
 delete from Equipe;
 delete from Utilisateur;

@@ -15,3 +15,7 @@ GET     /logout                             controllers.Authentification.logout(
 # Pronostics page
 GET     /pronostics                         controllers.Pronostiques.pronostics()
 POST    /pronostics          				controllers.Pronostiques.save()
+
+# Inscription page
+GET		/inscription						controllers.Utilisateurs.inscription()
+POST	/inscription						controllers.Utilisateurs.save()

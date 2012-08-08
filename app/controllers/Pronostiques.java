@@ -17,7 +17,7 @@ public class Pronostiques extends Controller  {
 	static Form<Pronostique> pronostiqueForm = form(Pronostique.class);
 	
 	public static Result pronostics() {
-		Utilisateur user = Utilisateur.findByNom(request().username());
+		Utilisateur user = Utilisateur.findByPseudo(request().username());
 		List<Matche> matches = Matche.find.all();
 		//List<Pronostique> pronostiques = Pronostique.find.where().eq("utilisateur",user).in("match", matches).findList();
 		List<Pronostique> pronostiques = Pronostique.find.all();
@@ -31,7 +31,7 @@ public class Pronostiques extends Controller  {
 		Form<Pronostique> filledForm = pronostiqueForm.bindFromRequest();
 		if(filledForm.hasErrors()) {
 			return badRequest(
-					views.html.index.render(Utilisateur.findByNom(request().username()))
+					views.html.index.render(Utilisateur.findByPseudo(request().username()))
 			);
 		} else {
 			Pronostique.create(filledForm.get());
