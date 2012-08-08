@@ -55,7 +55,6 @@ create table utilisateur (
   constraint pk_utilisateur primary key (pseudo))
 ;
 
-<<<<<<< HEAD
 alter table journee add constraint fk_journee_matche1_1 foreign key (Matche1) references matche (id) on delete restrict on update restrict;
 create index ix_journee_matche1_1 on journee (Matche1);
 alter table journee add constraint fk_journee_matche2_2 foreign key (Matche2) references matche (id) on delete restrict on update restrict;
