@@ -83,7 +83,7 @@ alter table matche add constraint fk_matche_vainqueur_13 foreign key (vainqueur)
 create index ix_matche_vainqueur_13 on matche (vainqueur);
 alter table pronostique add constraint fk_pronostique_matche_14 foreign key (matche) references matche (id) on delete restrict on update restrict;
 create index ix_pronostique_matche_14 on pronostique (matche);
-alter table pronostique add constraint fk_pronostique_utilisateur_15 foreign key (utilisateur) references utilisateur (nom) on delete restrict on update restrict;
+alter table pronostique add constraint fk_pronostique_utilisateur_15 foreign key (utilisateur) references utilisateur (pseudo) on delete restrict on update restrict;
 create index ix_pronostique_utilisateur_15 on pronostique (utilisateur);
 
 
