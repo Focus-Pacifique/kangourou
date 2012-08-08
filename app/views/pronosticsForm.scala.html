@@ -9,11 +9,11 @@
 				<thead>
 					<tr>
 						<td colspan="3">
-						<select name="journee" size="1" onchange="javascript:submitJournee(1)">
+						<select id="journeeSelect" name="journee" size="1" onchange="javascript:submitJournee('/pronostics?id=')">
 							@for(journeeTemp <- journees) {
 								<option value="@journeeTemp.id">@journeeTemp.getNomJournee()
 							}
-						</select><a href="@routes.Pronostiques.pronostics("1")">Valider</a></td>
+						</select></td>
 
 					</tr>
 					<tr>				
@@ -67,5 +67,11 @@
 <script>
 	function pronostiquer(id) {
 	 	$('#'+id).toggle('fast');
+	 }
+</script>
+<script>
+	function submitJournee(path) {
+		var id = $('#journeeSelect').val();
+	 	document.location.href=path+id;
 	 }
 </script>
