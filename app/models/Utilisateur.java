@@ -47,7 +47,7 @@ public class Utilisateur extends Model{
     public static Utilisateur authenticate(String login, String password) {
         return find.where()
             .eq("pseudo", login)
-            //.eq("password", password)
+            .eq("password", password)
             .findUnique();
     }
     
