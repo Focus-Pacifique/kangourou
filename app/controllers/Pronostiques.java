@@ -21,6 +21,7 @@ public class Pronostiques extends Controller  {
 	static Form<Journee> journeeForm = form(Journee.class);
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
 	public static Result pronostics(String id) {
 		Utilisateur user = Utilisateur.findByNom(request().username());
 //		List<Matche> matches = Matche.find.all();
@@ -30,6 +31,8 @@ public class Pronostiques extends Controller  {
 		
 		List<Pronostique> pronostiques = Pronostique.find.where().eq("utilisateur",user).findList();
 =======
+=======
+>>>>>>> master
 	public static Result pronostics() {
 		Utilisateur user = Utilisateur.findByPseudo(request().username());
 		List<Matche> matches = Matche.find.all();

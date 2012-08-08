@@ -23,4 +23,7 @@ POST    /pronostics          				controllers.Pronostiques.save()
 # Inscription page
 GET		/inscription						controllers.Utilisateurs.inscription()
 POST	/inscription						controllers.Utilisateurs.save()
+<<<<<<< HEAD
 >>>>>>> Inscription utilisateur
+=======
+>>>>>>> master
