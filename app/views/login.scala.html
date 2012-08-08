@@ -1,0 +1,36 @@
+@(form: Form[Authentification.AuthenticatedUtilisateur])
+
+@main(null) {
+	<div class="row">
+		<div class="span2 offset1">
+			<fieldset>
+	   			 @helper.form(routes.Authentification.authenticate) {
+	   			 
+		   			 <h2>Sign in</h2>
+		   			 
+		   			 @if(form.hasGlobalErrors) { 
+		            	<p class="error">@form.globalError.message</p>
+		       		 }
+		
+			        @if(flash.contains("success")) {
+			            <p class="success">@flash.get("success")</p>
+			        }
+				
+					@helper.inputText(form("pseudo"))
+					@helper.inputPassword(form("password"))
+					<div class="span1">
+		   			<button class="btn btn-primary btn-large" type="submit">Login</button>
+		   		</div>
+				}
+			</fieldset>   	
+		   	<div class="row">
+		   		<div class="span1">
+		   			<a href="@routes.Utilisateurs.inscription()" class="btn">S'inscrire</a>
+		   		</div>
+		   		<div class="span1">
+		   			<button class="btn btn-primary btn-large" type="submit">Login</button>
+		   		</div>
+		   	</div>
+	   	</div>
+	</div>
+}
