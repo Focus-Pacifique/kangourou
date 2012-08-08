@@ -13,5 +13,5 @@ POST    /login                              controllers.Authentification.authent
 GET     /logout                             controllers.Authentification.logout()
 
 # Pronostics page
-GET     /pronostics                         controllers.Pronostiques.pronostics()
-POST    /pronostics          				controllers.Pronostiques.save()
+GET     /pronostics                         controllers.Pronostiques.pronostics(id)
+POST    /pronostics          				controllers.Pronostiques.save(idMatche)

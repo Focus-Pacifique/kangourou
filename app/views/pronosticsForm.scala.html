@@ -1,4 +1,4 @@
-@(test: List[Matche],pronostiques: List[Pronostique], pronostiqueForm: Form[Pronostique],user: Utilisateur)
+@(test: List[Matche],pronostiques: List[Pronostique], pronostiqueForm: Form[Pronostique],user: Utilisateur, journees: List[Journee], journeeForm: Form[Journee])
 @import helper.twitterBootstrap._
 
 @main(user) {	
@@ -7,6 +7,15 @@
 		<div class="span3 offset4">
 			<table class="table table-striped">
 				<thead>
+					<tr>
+						<td colspan="3">
+						<select name="journee" size="1" onchange="javascript:submitJournee(1)">
+							@for(journeeTemp <- journees) {
+								<option value="@journeeTemp.id">@journeeTemp.getNomJournee()
+							}
+						</select><a href="@routes.Pronostiques.pronostics("1")">Valider</a></td>
+
+					</tr>
 					<tr>				
 						<th>Domicile</th>
 						<th></th>
@@ -16,21 +25,19 @@
 				<tbody>			
 					@for(matchTemp <- test) {
 						<tr>
-							<td>@matchTemp.equipe1.getNom()</td>
+							<td>@matchTemp.getEquipe1().getNom()</td>
 							<td><input type="button" value="Pronostiquer" class="btn btn-success btn-mini" onclick="javascript:pronostiquer('Pronostics_@matchTemp.id');"></td>
-							<td style="text-align:right;">@matchTemp.equipe2.getNom()</td>
+							<td style="text-align:right;">@matchTemp.getEquipe2().getNom()</td>
 						</tr>
 						<tr id="Pronostics_@matchTemp.id" style="display:none;">
 							<td colspan="3" style="text-align: center;">
-							@helper.form(routes.Pronostiques.save) {
+							@helper.form(routes.Pronostiques.save(matchTemp.id.toString())) {
 								@if(!pronostiques.isEmpty() && !pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).isEmpty()){
 									@matchTemp.equipe1.getNom() : @pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1()
 									@matchTemp.equipe2.getNom() : @pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
 								}else{
 									
 									<fieldset>
-										@helper.inputText(pronostiqueForm("matche"))
-										@helper.inputText(pronostiqueForm("utilisateur"))					
 										@helper.inputText(pronostiqueForm("pronoEquipe1"))
 										@helper.inputText(pronostiqueForm("pronoEquipe2"))
 									</fieldset>
@@ -43,13 +50,13 @@
 							</td>
 						</tr>
 					}	
-					@for(pronostiqueTemp <- pronostiques) {
-						<tr>
-							<td colspan="3">
-							@pronostiqueTemp.getMatche().getEquipe1().getNom(): @pronostiqueTemp.getPronoEquipe1() @pronostiqueTemp.getMatche().getEquipe2().getNom(): @pronostiqueTemp.getPronoEquipe2()
-							</td>
-						</tr>
-					}		
+<!-- 					@for(pronostiqueTemp <- pronostiques) { -->
+<!-- 						<tr> -->
+<!-- 							<td colspan="3"> -->
+<!-- 							@pronostiqueTemp.getMatche().getEquipe1().getNom(): @pronostiqueTemp.getPronoEquipe1() @pronostiqueTemp.getMatche().getEquipe2().getNom(): @pronostiqueTemp.getPronoEquipe2() -->
+<!-- 							</td> -->
+<!-- 						</tr> -->
+<!-- 					}		 -->
 				</tbody>
 			</table>
 		</div>

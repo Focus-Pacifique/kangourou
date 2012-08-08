@@ -33,14 +33,29 @@ insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur) valu
 insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur) values (8,17,2,null,null,null);
 insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur) values (9,19,20,null,null,null);
 insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur) values (10,14,9,null,null,null);
+insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur,dateMatche) values (11,1,2,0,0,null,null);
+insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur) values (12,4,3,null,null,null);
+insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur) values (13,5,6,null,null,null);
+insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur) values (14,8,7,null,null,null);
+insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur) values (15,9,10,null,null,null);
+insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur) values (16,12,11,null,null,null);
+insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur) values (17,13,14,null,null,null);
+insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur) values (18,16,15,null,null,null);
+insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur) values (19,17,18,null,null,null);
+insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur) values (20,20,19,null,null,null);
+
+insert into Journee (id,NomJournee,Matche1,Matche2,Matche3,Matche4,Matche5,Matche6,Matche7,Matche8,Matche9,Matche10,dateJournee) values (1,'1ère journée',1,2,3,4,5,6,7,8,9,10,now());
+insert into Journee (id,NomJournee,Matche1,Matche2,Matche3,Matche4,Matche5,Matche6,Matche7,Matche8,Matche9,Matche10,dateJournee) values (2,'2ème journée',11,12,13,14,15,16,17,18,19,20,null);
 
 insert into Utilisateur (nom,prenom,points,password) values ('toto','toto',0,'toto');
+insert into Utilisateur (nom,prenom,points,password) values ('Gui','Sabot',10,'test');
 
 insert into Pronostique (id,matche,utilisateur,pronoEquipe1,pronoEquipe2) values (1,1,'toto',3,2);
 
 # --- !Downs
 
 delete from Pronostique;
-delete from Match;
+delete from Journee;
+delete from Matche;
 delete from Equipe;
 delete from Utilisateur;
