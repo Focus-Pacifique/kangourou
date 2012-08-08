@@ -13,5 +13,14 @@ POST    /login                              controllers.Authentification.authent
 GET     /logout                             controllers.Authentification.logout()
 
 # Pronostics page
+<<<<<<< HEAD
 GET     /pronostics                         controllers.Pronostiques.pronostics(id)
 POST    /pronostics          				controllers.Pronostiques.save(idMatche)
+=======
+GET     /pronostics                         controllers.Pronostiques.pronostics()
+POST    /pronostics          				controllers.Pronostiques.save()
+
+# Inscription page
+GET		/inscription						controllers.Utilisateurs.inscription()
+POST	/inscription						controllers.Utilisateurs.save()
+>>>>>>> Inscription utilisateur

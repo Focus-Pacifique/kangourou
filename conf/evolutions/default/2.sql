@@ -47,15 +47,22 @@ insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur) valu
 insert into Journee (id,NomJournee,Matche1,Matche2,Matche3,Matche4,Matche5,Matche6,Matche7,Matche8,Matche9,Matche10,dateJournee) values (1,'1ère journée',1,2,3,4,5,6,7,8,9,10,now());
 insert into Journee (id,NomJournee,Matche1,Matche2,Matche3,Matche4,Matche5,Matche6,Matche7,Matche8,Matche9,Matche10,dateJournee) values (2,'2ème journée',11,12,13,14,15,16,17,18,19,20,null);
 
+<<<<<<< HEAD
 insert into Utilisateur (nom,prenom,points,password) values ('toto','toto',0,'toto');
 insert into Utilisateur (nom,prenom,points,password) values ('Gui','Sabot',10,'test');
+=======
+insert into Utilisateur (pseudo,nom,prenom,points,password) values ('Manoosh','Molle','Alexis',0,'alex');
+>>>>>>> Inscription utilisateur
 
-insert into Pronostique (id,matche,utilisateur,pronoEquipe1,pronoEquipe2) values (1,1,'toto',3,2);
+insert into Pronostique (id,matche,utilisateur,pronoEquipe1,pronoEquipe2) values (1,1,'Manoosh',3,2);
 
 # --- !Downs
 
 delete from Pronostique;
+<<<<<<< HEAD
 delete from Journee;
+=======
+>>>>>>> Inscription utilisateur
 delete from Matche;
 delete from Equipe;
 delete from Utilisateur;

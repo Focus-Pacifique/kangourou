@@ -11,15 +11,15 @@ public class Authentification extends Controller {
 
     public static class AuthenticatedUtilisateur {
 
-        public String nom;
+        public String pseudo;
         public String password;
 
-        public String getNom() {
-			return nom;
+        public String getPseudo() {
+			return pseudo;
 		}
 
-		public void setNom(String nom) {
-			this.nom = nom;
+		public void setPseudo(String pseudo) {
+			this.pseudo = pseudo;
 		}
 
 		public String getPassword() {
@@ -31,9 +31,9 @@ public class Authentification extends Controller {
 		}
 
 		public String validate() {
-            if(Utilisateur.authenticate(nom, password) == null) {
+            if(Utilisateur.authenticate(pseudo, password) == null) {
             	
-                return "Informations incorrecte " + nom + " " + password;
+                return "Informations incorrecte " + pseudo + " " + password;
             }
             return null;
         }
@@ -51,7 +51,7 @@ public class Authentification extends Controller {
         if(loginForm.hasErrors()) {
             return badRequest(login.render(loginForm));
         } else {
-            session("nom", loginForm.get().nom);
+            session("pseudo", loginForm.get().pseudo);
             return redirect(
                 routes.Application.index()
             );

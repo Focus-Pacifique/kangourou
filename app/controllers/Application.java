@@ -12,7 +12,7 @@ public class Application extends Controller {
   
 	  public static Result index() {
 	
-		  return ok(index.render(Utilisateur.findByNom(request().username())));
+		  return ok(index.render(Utilisateur.findByPseudo(request().username())));
 		  
 	  }
   

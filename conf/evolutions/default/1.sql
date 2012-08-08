@@ -47,13 +47,15 @@ create table pronostique (
 ;
 
 create table utilisateur (
-  nom                       varchar(255) not null,
+  pseudo                    varchar(255) not null,
+  nom                       varchar(255),
   prenom                    varchar(255),
   points                    integer,
   password                  varchar(255),
-  constraint pk_utilisateur primary key (nom))
+  constraint pk_utilisateur primary key (pseudo))
 ;
 
+<<<<<<< HEAD
 alter table journee add constraint fk_journee_matche1_1 foreign key (Matche1) references matche (id) on delete restrict on update restrict;
 create index ix_journee_matche1_1 on journee (Matche1);
 alter table journee add constraint fk_journee_matche2_2 foreign key (Matche2) references matche (id) on delete restrict on update restrict;
@@ -84,6 +86,18 @@ alter table pronostique add constraint fk_pronostique_matche_14 foreign key (mat
 create index ix_pronostique_matche_14 on pronostique (matche);
 alter table pronostique add constraint fk_pronostique_utilisateur_15 foreign key (utilisateur) references utilisateur (nom) on delete restrict on update restrict;
 create index ix_pronostique_utilisateur_15 on pronostique (utilisateur);
+=======
+alter table matche add constraint fk_matche_equipe1_1 foreign key (Equipe1) references equipe (id) on delete restrict on update restrict;
+create index ix_matche_equipe1_1 on matche (Equipe1);
+alter table matche add constraint fk_matche_equipe2_2 foreign key (Equipe2) references equipe (id) on delete restrict on update restrict;
+create index ix_matche_equipe2_2 on matche (Equipe2);
+alter table matche add constraint fk_matche_vainqueur_3 foreign key (vainqueur) references equipe (id) on delete restrict on update restrict;
+create index ix_matche_vainqueur_3 on matche (vainqueur);
+alter table pronostique add constraint fk_pronostique_matche_4 foreign key (matche) references matche (id) on delete restrict on update restrict;
+create index ix_pronostique_matche_4 on pronostique (matche);
+alter table pronostique add constraint fk_pronostique_utilisateur_5 foreign key (utilisateur) references utilisateur (pseudo) on delete restrict on update restrict;
+create index ix_pronostique_utilisateur_5 on pronostique (utilisateur);
+>>>>>>> Inscription utilisateur
 
 
 
