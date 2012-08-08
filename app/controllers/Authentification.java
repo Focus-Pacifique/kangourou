@@ -33,7 +33,7 @@ public class Authentification extends Controller {
 		public String validate() {
             if(Utilisateur.authenticate(pseudo, password) == null) {
             	
-                return "Informations incorrecte " + pseudo + " " + password;
+                return "Informations incorrectes";
             }
             return null;
         }

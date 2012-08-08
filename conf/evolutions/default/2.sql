@@ -32,16 +32,6 @@ insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur,dateM
 insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur,dateMatche) values (7,16,6,null,null,null,'2012-08-11 21:00:00');
 insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur,dateMatche) values (8,17,2,null,null,null,'2012-08-11 21:00:00');
 insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur,dateMatche) values (9,19,20,null,null,null,'2012-08-11 21:00:00');
-insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur,dateMatche) values (10,14,9,null,null,null,'2012-08-11 21:00:00');
-insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur,dateMatche) values (11,1,2,0,0,null,null,'2012-08-11 21:00:00');
-insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur,dateMatche) values (12,4,3,null,null,null,'2012-08-11 21:00:00');
-insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur,dateMatche) values (13,5,6,null,null,null,'2012-08-11 21:00:00');
-insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur,dateMatche) values (14,8,7,null,null,null,'2012-08-11 21:00:00');
-insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur,dateMatche) values (15,9,10,null,null,null,'2012-08-11 21:00:00');
-insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur,dateMatche) values (16,12,11,null,null,null,'2012-08-11 21:00:00');
-insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur,dateMatche) values (17,13,14,null,null,null,'2012-08-11 21:00:00');
-insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur,dateMatche) values (18,16,15,null,null,null,'2012-08-11 21:00:00');
-insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur,dateMatche) values (19,17,18,null,null,null,'2012-08-11 21:00:00');
-insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur,dateMatche) values (20,20,19,null,null,null,'2012-08-12 21:00:00');
+insert into Matche (id,equipe1,equipe2,scoreEquipe1,scoreEquipe2,vainqueur,dateMatche) values (10,14,9,null,null,null,'2012-08-12 21:00:00');
 
 insert into Journee (id,NomJournee,Matche1,Matche2,Matche3,Matche4,Matche5,Matche6,Matche7,Matche8,Matche9,Matche10,dateJournee) values (1,'1ère journée',1,2,3,4,5,6,7,8,9,10,'2012-08-10 20:45:00');
