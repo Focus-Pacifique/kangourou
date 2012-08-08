@@ -20,8 +20,6 @@ public class Pronostiques extends Controller  {
 	static Form<Pronostique> pronostiqueForm = form(Pronostique.class);
 	static Form<Journee> journeeForm = form(Journee.class);
 	
-<<<<<<< HEAD
-<<<<<<< HEAD
 	public static Result pronostics(String id) {
 		Utilisateur user = Utilisateur.findByNom(request().username());
 //		List<Matche> matches = Matche.find.all();
@@ -30,15 +28,6 @@ public class Pronostiques extends Controller  {
 		List<Matche> matches = Journee.findMatchesById(idLong);
 		
 		List<Pronostique> pronostiques = Pronostique.find.where().eq("utilisateur",user).findList();
-=======
-=======
->>>>>>> master
-	public static Result pronostics() {
-		Utilisateur user = Utilisateur.findByPseudo(request().username());
-		List<Matche> matches = Matche.find.all();
-		//List<Pronostique> pronostiques = Pronostique.find.where().eq("utilisateur",user).in("match", matches).findList();
-		List<Pronostique> pronostiques = Pronostique.find.all();
->>>>>>> Inscription utilisateur
 		pronostiqueForm = form(Pronostique.class);
 		return ok(
 		pronosticsForm.render(matches,pronostiques,pronostiqueForm,user,journees,journeeForm)
