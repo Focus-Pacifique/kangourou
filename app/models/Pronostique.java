@@ -29,6 +29,16 @@ public class Pronostique extends Model {
 	@Column(name="pronoEquipe2")
 	public Integer pronoEquipe2;
 	
+	@Column(name="calcule")
+	public Boolean calcule;
+	
+	public Boolean getCalcule() {
+		return calcule;
+	}
+	public void setCalcule(Boolean calcule) {
+		this.calcule = calcule;
+	}
+
 	public static Finder<Long,Pronostique> find = new Finder(
 		    Long.class, Pronostique.class
 		  );
@@ -67,6 +77,10 @@ public class Pronostique extends Model {
 	
 	public static void create(Pronostique pronostique){
 		pronostique.save();
+	}
+	
+	public static void update(Pronostique pronostique){
+		pronostique.update();
 	}
 	
 	public static void delete(Long id){

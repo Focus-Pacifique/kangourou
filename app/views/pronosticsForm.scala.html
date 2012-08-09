@@ -28,19 +28,33 @@
 				</thead>
 				<tbody>			
 					@for(matchTemp <- test) {
-						<tr>
-							<td>@matchTemp.getEquipe1().getNom()</td>
-							<td><input type="button" value="Pronostiquer" class="btn btn-success btn-mini" onclick="javascript:pronostiquer('Pronostics_@matchTemp.id');"></td>
-							<td style="text-align:right;">@matchTemp.getEquipe2().getNom()</td>
-						</tr>
-						<tr id="Pronostics_@matchTemp.id" style="display:none;">
-							<td colspan="3" style="text-align: center;">
-							@helper.form(routes.Pronostiques.save(matchTemp.id.toString())) {
-								@if(!pronostiques.isEmpty() && !pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).isEmpty()){
-									@matchTemp.equipe1.getNom() : @pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1()
-									@matchTemp.equipe2.getNom() : @pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
-								}else{
-									
+						@helper.form(routes.Pronostiques.save(matchTemp.id.toString())) {
+							@if(!pronostiques.isEmpty() && !pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).isEmpty()){
+								<tr>
+									<td>@matchTemp.getEquipe1().getNom()</td>
+									<td style="text-align: center;">@pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1() - @pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
+									<input type="button" value="Changer" class="btn btn-warning btn-mini" onclick="javascript:pronostiquer('Pronostics_@matchTemp.id');"></td>
+									<td style="text-align:right;">@matchTemp.getEquipe2().getNom()</td>
+								</tr>
+								<tr id="Pronostics_@matchTemp.id" style="display:none;">
+									<td colspan="3" style="text-align: center;">
+										<fieldset>
+											@helper.inputText(pronostiqueForm("pronoEquipe1"), '_label -> matchTemp.equipe1.getNom())
+											@helper.inputText(pronostiqueForm("pronoEquipe2"), '_label -> matchTemp.equipe2.getNom())
+										</fieldset>
+									<div class="actions">
+            							<input type="submit" value="Valider" class="btn">
+     								</div>
+									</td>
+								</tr>
+							}else{
+								<tr>
+									<td>@matchTemp.getEquipe1().getNom()</td>
+									<td><input type="button" value="Pronostiquer" class="btn btn-success btn-mini" onclick="javascript:pronostiquer('Pronostics_@matchTemp.id');"></td>
+									<td style="text-align:right;">@matchTemp.getEquipe2().getNom()</td>
+								</tr>
+								<tr id="Pronostics_@matchTemp.id" style="display:none;">
+									<td colspan="3" style="text-align: center;">
 									<fieldset>
 										@helper.inputText(pronostiqueForm("pronoEquipe1"), '_label -> matchTemp.equipe1.getNom())
 										@helper.inputText(pronostiqueForm("pronoEquipe2"), '_label -> matchTemp.equipe2.getNom())
@@ -48,7 +62,8 @@
 									<div class="actions">
             							<input type="submit" value="Valider" class="btn">
      								</div>
-      								  
+									</td>
+      							</tr>
 								}
 							}
 							</td>
