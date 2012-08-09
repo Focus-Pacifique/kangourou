@@ -33,8 +33,7 @@
 							<td colspan="3" style="text-align: center;">
 							@helper.form(routes.Pronostiques.save(matchTemp.id.toString())) {
 								@if(!pronostiques.isEmpty() && !pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).isEmpty()){
-									@matchTemp.equipe1.getNom() : @pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1()
-									@matchTemp.equipe2.getNom() : @pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
+									<h1>@pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1() - @pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()</h1>
 								}else{
 									
 									<fieldset>

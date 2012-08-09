@@ -8,19 +8,22 @@
 	
 	        	<h2>Inscription</h2>
 	
-		        @if(form.hasGlobalErrors) { 
+		       	 @if(form.hasGlobalErrors) { 
 		            <p class="error">@form.globalError.message</p>
 		        }
 		
 		        @if(flash.contains("success")) {
 		            <p class="success">@flash.get("success")</p>
-		        }
-			
-				@helper.inputText(form("nom"))
-				@helper.inputText(form("prenom"))
-				@helper.inputText(form("pseudo"))
-				@helper.inputPassword(form("password"))
-				<button class="btn" type="submit">Login</button>
+		        }		
+				
+				@helper.inputText(form("prenom"),'_label->"Prenom")
+				@helper.inputText(form("nom"),'_label->"Nom")
+				@helper.inputText(form("pseudo"),'_label->"Pseudo")
+				@helper.inputText(form("email"),'_label->"Email")
+				@helper.inputPassword(form("password"),'_label->"Password")
+				<button class="btn" type="submit">S'inscrire</button>
+				&nbsp;&nbsp;&nbsp;&nbsp;<a href="@routes.Authentification.login()" class="btn">Retour</a>
+				
 			
 	    }
 		</fieldset>

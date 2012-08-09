@@ -17,7 +17,7 @@ public class Utilisateurs extends Controller {
         System.out.println(filledForm.toString());
        if(filledForm.hasErrors()) {
             return badRequest(
-                   // views.html.login.render()
+                  views.html.inscription.render(utilisateurForm)
             );
         } else {
             Utilisateur test = filledForm.get();
