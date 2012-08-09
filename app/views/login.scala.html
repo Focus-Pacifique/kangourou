@@ -16,16 +16,11 @@
 			            <p class="success">@flash.get("success")</p>
 			        }
 				
-					@helper.inputText(form("pseudo"))
-					@helper.inputPassword(form("password"))
-			<div class="row">
-		   		<div class="span1">
-		   			<a href="@routes.Utilisateurs.inscription()" class="btn">S'inscrire</a>
-		   		</div>
-		   		<div class="span1">
-		   			<button class="btn btn-primary btn-large" type="submit">Login</button>
-		   		</div>
-		   	</div>
+					@helper.inputText(form("pseudo"),'_label->"Pseudo")
+					@helper.inputPassword(form("password"),'_label->"Password")
+					
+		   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="@routes.Utilisateurs.inscription()" class="btn">S'inscrire</a>
+		   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary" type="submit">Login</button>
 				}
 			</fieldset>   	
 		   	

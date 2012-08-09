@@ -50,6 +50,7 @@ create table utilisateur (
   pseudo                    varchar(255) not null,
   nom                       varchar(255),
   prenom                    varchar(255),
+  email                     varchar(255),
   points                    integer,
   password                  varchar(255),
   constraint pk_utilisateur primary key (pseudo))

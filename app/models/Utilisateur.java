@@ -15,25 +15,25 @@ import play.db.ebean.Model;
 public class Utilisateur extends Model{
 	
 	@Id
-    @Required
     @NonEmpty
     @Column
     public String pseudo;
 	
-	@Required
     @NonEmpty
 	@Column(name = "nom")
     public String nom;
     
-	@Required
     @NonEmpty
 	@Column(name = "prenom")
     public String prenom;
+	
+    @NonEmpty
+	@Column(name = "email")
+    public String email;
     
 	@Column(name = "points")
     public Integer points;
     
-	@Required
 	@NonEmpty
 	@Column(name = "password")
     public String password;
