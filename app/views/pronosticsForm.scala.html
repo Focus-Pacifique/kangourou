@@ -1,4 +1,4 @@
-@(test: List[Matche],pronostiques: List[Pronostique], pronostiqueForm: Form[Pronostique],user: Utilisateur, journees: List[Journee], journeeForm: Form[Journee])
+@(test: List[Matche],pronostiques: List[Pronostique], pronostiqueForm: Form[Pronostique],user: Utilisateur, journees: List[Journee], journee: Journee)
 @import helper.twitterBootstrap._
 
 @main(user) {	
@@ -11,7 +11,11 @@
 						<td colspan="3">
 						<select id="journeeSelect" name="journee" size="1" onchange="javascript:submitJournee('/pronostics?id=')">
 							@for(journeeTemp <- journees) {
-								<option value="@journeeTemp.id">@journeeTemp.getNomJournee()
+								@if(journeeTemp==journee) {
+									<option value="@journeeTemp.id" selected="selected">@journeeTemp.getNomJournee()
+								} else {
+									<option value="@journeeTemp.id">@journeeTemp.getNomJournee()
+								}
 							}
 						</select></td>
 

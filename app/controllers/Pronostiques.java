@@ -1,8 +1,7 @@
 package controllers;
 
+import java.util.Date;
 import java.util.List;
-
-import ch.qos.logback.classic.Logger;
 
 import models.Journee;
 import models.Matche;
@@ -25,12 +24,14 @@ public class Pronostiques extends Controller  {
 //		List<Matche> matches = Matche.find.all();
 		List<Journee> journees = Journee.find.all();
 		Long idLong = Long.parseLong(id);
+		Journee journee = Journee.find.byId(idLong);
+		
 		List<Matche> matches = Journee.findMatchesById(idLong);
 		
 		List<Pronostique> pronostiques = Pronostique.find.where().eq("utilisateur",user).findList();
 		pronostiqueForm = form(Pronostique.class);
 		return ok(
-		pronosticsForm.render(matches,pronostiques,pronostiqueForm,user,journees,journeeForm)
+		pronosticsForm.render(matches,pronostiques,pronostiqueForm,user,journees,journee)
 		);
 	}
   
@@ -42,6 +43,8 @@ public class Pronostiques extends Controller  {
 					views.html.index.render(Utilisateur.findByPseudo(request().username()))
 			);
 		} else {
+			Date maintenant = new Date();
+			
 			Pronostique test = filledForm.get();
 			
 			Utilisateur user = Utilisateur.findByPseudo(request().username());
@@ -50,9 +53,15 @@ public class Pronostiques extends Controller  {
 			Matche matche = Matche.findById(Long.parseLong(idMatche));
 			test.setMatche(matche);
 			
-			System.out.println(test.getUtilisateur().nom);
-			Pronostique.create(test);
-			return redirect(routes.Pronostiques.pronostics("1"));  
+			if(maintenant.before(matche.dateMatche)){
+				System.out.println(test.getUtilisateur().nom);
+				Pronostique.create(test);
+				return redirect(routes.Pronostiques.pronostics("1"));
+			} else {
+				return badRequest(
+						views.html.index.render(Utilisateur.findByPseudo(request().username()))
+				);
+			}
 		}
 	}
 	  
