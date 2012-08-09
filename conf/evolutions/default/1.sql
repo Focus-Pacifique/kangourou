@@ -43,6 +43,7 @@ create table pronostique (
   utilisateur               varchar(255),
   pronoEquipe1              integer,
   pronoEquipe2              integer,
+  calcule                   tinyint(1) default 0,
   constraint pk_pronostique primary key (id))
 ;
 

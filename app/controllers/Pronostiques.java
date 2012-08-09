@@ -58,7 +58,7 @@ public class Pronostiques extends Controller  {
 			List<Pronostique> pronostic = Pronostique.find.where().eq("utilisateur", user).eq("matche", matche).findList();
 			
 			if(maintenant.before(matche.dateMatche)){
-				if(null==pronostic)
+				if(pronostic.isEmpty())
 				{
 					System.out.println(test.getUtilisateur().nom);
 					Pronostique.create(test);
