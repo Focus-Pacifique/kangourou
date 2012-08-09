@@ -77,6 +77,46 @@ public class Matche extends Model{
             find.where().findPagingList(pageSize)
                 .getPage(page);
     }
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Integer getScoreEquipe1() {
+		return scoreEquipe1;
+	}
+
+	public void setScoreEquipe1(Integer scoreEquipe1) {
+		this.scoreEquipe1 = scoreEquipe1;
+	}
+
+	public Integer getScoreEquipe2() {
+		return scoreEquipe2;
+	}
+
+	public void setScoreEquipe2(Integer scoreEquipe2) {
+		this.scoreEquipe2 = scoreEquipe2;
+	}
+
+	public Equipe getVainqueur() {
+		return vainqueur;
+	}
+
+	public void setVainqueur(Equipe vainqueur) {
+		this.vainqueur = vainqueur;
+	}
+
+	public Date getDateMatche() {
+		return dateMatche;
+	}
+
+	public void setDateMatche(Date dateMatche) {
+		this.dateMatche = dateMatche;
+	}
     
     
 

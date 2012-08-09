@@ -53,9 +53,20 @@ public class Pronostiques extends Controller  {
 			Matche matche = Matche.findById(Long.parseLong(idMatche));
 			test.setMatche(matche);
 			
+			test.setCalcule(false);
+			
+			List<Pronostique> pronostic = Pronostique.find.where().eq("utilisateur", user).eq("matche", matche).findList();
+			
 			if(maintenant.before(matche.dateMatche)){
-				System.out.println(test.getUtilisateur().nom);
-				Pronostique.create(test);
+				if(pronostic.isEmpty())
+				{
+					System.out.println(test.getUtilisateur().nom);
+					Pronostique.create(test);
+				} else {
+					test.id = pronostic.get(0).getId();
+					Pronostique.update(test);
+					System.out.println("UPDATE !!!");
+				}
 				return redirect(routes.Pronostiques.pronostics("1"));
 			} else {
 				return badRequest(
