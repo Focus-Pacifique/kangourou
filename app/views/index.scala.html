@@ -25,10 +25,21 @@
 				</thead>
 				<tbody>	
 					@for(utilisateurTemp <- listeUtilisateur) {
-						<tr>
-							<td>@utilisateurTemp.getPseudo()</td>
-							<td>@utilisateurTemp.getPoints()</td>
-						</tr>
+						@if(utilisateurTemp.getPseudo()==user.getPseudo()) {
+							<tr>
+								<td>									
+									<FONT COLOR="green">@utilisateurTemp.getPseudo()</FONT>
+								</td>
+								<td><FONT COLOR="green" >@utilisateurTemp.getPoints()</FONT></td>
+							</tr>
+						} else {
+							<tr>
+								<td>
+									@utilisateurTemp.getPseudo()
+								</td>
+								<td>@utilisateurTemp.getPoints()</td>
+							</tr>
+						}
 					}
 				</tbody>
 			</table>
