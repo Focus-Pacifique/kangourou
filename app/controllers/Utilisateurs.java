@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Matche;
 import models.Pronostique;
 import models.Utilisateur;
 import play.data.Form;
@@ -32,5 +33,6 @@ public class Utilisateurs extends Controller {
 	public static Result inscription() {
 		return ok(inscription.render(utilisateurForm));
 	}
+	
 
 }

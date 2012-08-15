@@ -19,3 +19,8 @@ POST    /pronostics          				controllers.Pronostiques.save(idMatche)
 # Inscription page
 GET		/inscription						controllers.Utilisateurs.inscription()
 POST	/inscription						controllers.Utilisateurs.save()
+
+# Admin page
+GET		/admin					controllers.Matches.admin()
+POST	/resultats					controllers.Matches.setResultats(id)
+POST	/calcul					controllers.Pronostiques.calculPoints()

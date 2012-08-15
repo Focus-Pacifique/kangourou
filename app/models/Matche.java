@@ -117,6 +117,10 @@ public class Matche extends Model{
 	public void setDateMatche(Date dateMatche) {
 		this.dateMatche = dateMatche;
 	}
+	
+	public static void update(Matche matche){
+		matche.update();
+	}
     
     
 

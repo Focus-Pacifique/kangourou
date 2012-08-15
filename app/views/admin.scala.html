@@ -1,0 +1,29 @@
+@(listJournee: List[Matche],user: Utilisateur, matchForm: Form[Matche])
+
+@main(user) {
+
+	
+		@helper.form(routes.Pronostiques.calculPoints()) {
+			<input type="submit" value="Calculer" class="btn btn-success" >
+		}
+
+	@for(matchTemp <- listJournee) {
+		@if(null==matchTemp.scoreEquipe1 || null==matchTemp.scoreEquipe2) {
+			@helper.form(routes.Matches.setResultats(matchTemp.id.toString())) {
+				<tr id="Pronostics_@matchTemp.id" style="display:none;">
+					<td colspan="3" style="text-align: center;">
+						<fieldset>
+							@helper.inputText(matchForm("scoreEquipe1"), '_label -> matchTemp.equipe1.getNom())
+							@helper.inputText(matchForm("scoreEquipe2"), '_label -> matchTemp.equipe2.getNom())
+						</fieldset>
+						<div class="actions">
+							<input type="submit" value="Valider" class="btn">
+						</div>
+					</td>
+				</tr>
+			}
+		}
+
+	}
+	
+}

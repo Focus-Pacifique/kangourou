@@ -32,12 +32,11 @@ public class Pronostique extends Model {
 	@Column(name="calcule")
 	public Boolean calcule;
 	
-	public Boolean getCalcule() {
-		return calcule;
-	}
-	public void setCalcule(Boolean calcule) {
-		this.calcule = calcule;
-	}
+	@ManyToOne
+	@JoinColumn(name="vainqueur")
+	public Equipe vainqueur;
+	
+	
 
 	public static Finder<Long,Pronostique> find = new Finder(
 		    Long.class, Pronostique.class
@@ -74,6 +73,21 @@ public class Pronostique extends Model {
 	public void setPronoEquipe2(Integer pronoEquipe2) {
 		this.pronoEquipe2 = pronoEquipe2;
 	}
+	
+	public Equipe getVainqueur() {
+		return vainqueur;
+	}
+	public void setVainqueur(Equipe vainqueur) {
+		this.vainqueur = vainqueur;
+	}
+	public Boolean getCalcule() {
+		return calcule;
+	}
+	public void setCalcule(Boolean calcule) {
+		this.calcule = calcule;
+	}
+	
+	
 	
 	public static void create(Pronostique pronostique){
 		pronostique.save();
