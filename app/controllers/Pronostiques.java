@@ -45,7 +45,7 @@ public class Pronostiques extends Controller  {
 		}
 		
 		return ok(
-			index.render(user)
+			index.render(user,Utilisateur.find.orderBy().desc("points").findList())
 		);
 			
 		}
@@ -72,7 +72,7 @@ public class Pronostiques extends Controller  {
 		System.out.println(filledForm.toString());
 		if(filledForm.hasErrors()) {
 			return badRequest(
-					views.html.index.render(Utilisateur.findByPseudo(request().username()))
+					views.html.index.render(Utilisateur.findByPseudo(request().username()),Utilisateur.find.orderBy().desc("points").findList())
 			);
 		} else {
 			Date maintenant = new Date();
@@ -110,7 +110,7 @@ public class Pronostiques extends Controller  {
 				return redirect(routes.Pronostiques.pronostics("2"));
 			} else {
 				return badRequest(
-						views.html.index.render(Utilisateur.findByPseudo(request().username()))
+						views.html.index.render(Utilisateur.findByPseudo(request().username()),Utilisateur.find.orderBy().desc("points").findList())
 				);
 			}
 		}

@@ -1,15 +1,38 @@
-@(user: Utilisateur)
+@(user: Utilisateur, listeUtilisateur: List[Utilisateur])
 
 @main(user){
 		
-	<h1>Les pronostics pour les vrais bonhommes !!</h1>
-	</br>
+	<div class="row">
+		<div class="span8">
+			<h1>Les pronostics pour les vrais bonhommes !!</h1>
+			</br>
 	
-	<IMG SRC="http://profile.ak.fbcdn.net/hprofile-ak-snc4/373322_163685023724534_1236690975_n.jpg" TITLE="Texte à afficher">
-	<br/>
-	<h2>R&egrave;gles</h2>
-	<br/>
-	<ol><li>Trouver le vainqueur rapporte 10 points</li>
-	<li>Pronostiquer le bon score rapporte 5 points</li></ol>
+			<IMG SRC="http://profile.ak.fbcdn.net/hprofile-ak-snc4/373322_163685023724534_1236690975_n.jpg" TITLE="Texte à afficher">
+			<br/>
+			<h2>R&egrave;gles</h2>
+			<br/>
+			<ol><li>Trouver le vainqueur rapporte 10 points</li>
+			<li>Pronostiquer le bon score rapporte 5 points</li></ol>
+		</div>
+		<div class="span4">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<td>Pseudo</td>
+						<td>Points</td>
+					</tr>
+						
+				</thead>
+				<tbody>	
+					@for(utilisateurTemp <- listeUtilisateur) {
+						<tr>
+							<td>@utilisateurTemp.getPseudo()</td>
+							<td>@utilisateurTemp.getPoints()</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>	
 	
 }
