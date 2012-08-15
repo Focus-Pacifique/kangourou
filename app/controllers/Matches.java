@@ -46,7 +46,7 @@ public class Matches extends Controller {
 			matche.id = matcheBase.getId();
 			if(matche.getScoreEquipe1() > matche.getScoreEquipe2()) {
 				matche.setVainqueur(matcheBase.getEquipe1());
-			} else {
+			} else if(matche.getScoreEquipe1() < matche.getScoreEquipe2()){
 				matche.setVainqueur(matcheBase.getEquipe2());
 			}
 			Matche.update(matche);
