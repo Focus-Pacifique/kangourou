@@ -53,10 +53,18 @@ public class Pronostiques extends Controller  {
 		
 	
 	public static Result pronostics(String id) {
+		Long idLong;
+		if (id.equalsIgnoreCase("0")) {
+			System.out.println("Id vaut 0");
+			Date maintenant = new Date();
+			
+			List<Journee> journeesFutures = Journee.find.where().gt("dateJournee", maintenant).orderBy().asc("dateJournee").findList();
+			idLong = journeesFutures.get(0).id;
+		} else {
+			idLong = Long.parseLong(id);
+		}
 		Utilisateur user = Utilisateur.findByPseudo(request().username());
-//		List<Matche> matches = Matche.find.all();
 		List<Journee> journees = Journee.find.all();
-		Long idLong = Long.parseLong(id);
 		Journee journee = Journee.find.byId(idLong);
 		
 		List<Matche> matches = Journee.findMatchesById(idLong);
@@ -70,7 +78,6 @@ public class Pronostiques extends Controller  {
   
 	public static Result save(String idMatche) {
 		Form<Pronostique> filledForm = pronostiqueForm.bindFromRequest();
-		System.out.println(filledForm.toString());
 		if(filledForm.hasErrors()) {
 			return badRequest(
 					views.html.index.render(Utilisateur.findByPseudo(request().username()),Utilisateur.find.orderBy().desc("points").findList())
@@ -95,20 +102,28 @@ public class Pronostiques extends Controller  {
 			}else {
 				test.setVainqueur(null);
 			}
-						
+			
+			// récupération de la journée en cours
+			String idJournee = "0";
+			List<Journee> journees = Journee.find.where().gt("dateJournee", maintenant).findList();
+			for (Journee journee : journees) {
+				List<Matche> matches = journee.findMatchesById(journee.id);
+				if (matches.contains(matche)) {
+					idJournee = journee.id.toString();
+				}
+			}
+			
 			List<Pronostique> pronostic = Pronostique.find.where().eq("utilisateur", user).eq("matche", matche).findList();
 			
 			if(maintenant.before(matche.dateMatche)){
 				if(pronostic.isEmpty())
 				{
-					System.out.println(test.getUtilisateur().nom);
 					Pronostique.create(test);
 				} else {
 					test.id = pronostic.get(0).getId();
 					Pronostique.update(test);
-					System.out.println("UPDATE !!!");
 				}
-				return redirect(routes.Pronostiques.pronostics("2"));
+				return redirect(routes.Pronostiques.pronostics(idJournee));
 			} else {
 				return badRequest(
 						views.html.index.render(Utilisateur.findByPseudo(request().username()),Utilisateur.find.orderBy().desc("points").findList())
