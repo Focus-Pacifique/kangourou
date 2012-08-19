@@ -24,31 +24,32 @@ public class Pronostiques extends Controller  {
 	public static Result calculPoints() {
 		Utilisateur user = Utilisateur.findByPseudo(request().username());
 		List<Utilisateur> utilisateurs = Utilisateur.find.all();
+		List<Matche> matches = Matche.find.where().isNotNull("scoreEquipe1").findList();
 		
-		for (Utilisateur utilisateur : utilisateurs) {
-			List<Pronostique> pronostiques = Pronostique.find.where().eq("utilisateur",utilisateur).eq("calcule",false).findList();
-			if(null!=pronostiques) {
-				for (Pronostique prono : pronostiques) {
-					//Matche matche = Matche.findById(prono.getId());
-					if(prono.getVainqueur() == prono.getMatche().getVainqueur()) {
-						if( (prono.getPronoEquipe1() == prono.getMatche().getScoreEquipe1()) && (prono.getPronoEquipe2() == prono.getMatche().getScoreEquipe2()) ) {
-							utilisateur.ajouterPoints(15,utilisateur);
-						} else {
-							utilisateur.ajouterPoints(10,utilisateur);
+		for (Matche match : matches) {
+				List<Pronostique> pronostiques = Pronostique.find.where().eq("matche",match).eq("calcule",false).findList();
+				if(null!=pronostiques) {
+					for (Pronostique prono : pronostiques) {
+						Utilisateur utilisateur = prono.utilisateur;
+						if(prono.getVainqueur() == prono.getMatche().getVainqueur()) {
+							if( (prono.getPronoEquipe1() == prono.getMatche().getScoreEquipe1()) && (prono.getPronoEquipe2() == prono.getMatche().getScoreEquipe2()) ) {
+								utilisateur.ajouterPoints(15,utilisateur);
+							} else {
+								utilisateur.ajouterPoints(10,utilisateur);
+							}
+							
 						}
-						
+						prono.setCalcule(true);
+						prono.update();
 					}
-					prono.setCalcule(true);
-					prono.update();
 				}
-			}
 		}
 		
 		return ok(
 			index.render(user,Utilisateur.find.orderBy().desc("points").findList())
 		);
 			
-		}
+	}
 		
 	
 	public static Result pronostics(String id) {
