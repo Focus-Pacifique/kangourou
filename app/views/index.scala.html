@@ -34,10 +34,10 @@
 							</tr>
 						} else {
 							<tr>
-								<td>
-									@utilisateurTemp.getPseudo()
+								<td><a href="@routes.Pronostiques.otherPronostics(utilisateurTemp.getPseudo(),"0")">
+									<FONT COLOR="black" >@utilisateurTemp.getPseudo()</FONT>
 								</td>
-								<td>@utilisateurTemp.getPoints()</td>
+								<td><FONT COLOR="black" >@utilisateurTemp.getPoints()</FONT></td>
 							</tr>
 						}
 					}

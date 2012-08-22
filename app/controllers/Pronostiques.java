@@ -13,6 +13,7 @@ import play.mvc.Result;
 import play.mvc.Security.Authenticated;
 import views.html.pronosticsForm;
 import views.html.index;
+import views.html.otherPronostics;
 
 @Authenticated(Secured.class)
 public class Pronostiques extends Controller  {
@@ -130,6 +131,31 @@ public class Pronostiques extends Controller  {
 				);
 			}
 		}
+	}
+	
+	public static Result otherPronostics(String pseudoUser, String idJournee) {
+		Long idLong;
+		
+		Date maintenant = new Date();
+		List<Journee> journeesPassees = Journee.find.where().lt("dateJournee", maintenant).orderBy().desc("dateJournee").findList();
+		
+		if (idJournee.equalsIgnoreCase("0")) {
+			idLong = journeesPassees.get(0).id;
+		} else {
+			idLong = Long.parseLong(idJournee);
+		}
+		Utilisateur user = Utilisateur.findByPseudo(request().username());
+
+		Journee journee = Journee.find.byId(idLong);
+		
+		Utilisateur userSelectionne = Utilisateur.findByPseudo(pseudoUser);
+		
+		List<Matche> matches = Journee.findMatchesById(idLong);
+		
+		List<Pronostique> pronostiques = Pronostique.find.where().eq("utilisateur",userSelectionne).findList();
+		return ok(
+		otherPronostics.render(matches,pronostiques,user,userSelectionne,journeesPassees,journee)
+		);
 	}
 	  
 	public static Result deletePronostique(Long id) {

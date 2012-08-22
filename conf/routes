@@ -24,3 +24,6 @@ POST	/inscription						controllers.Utilisateurs.save()
 GET		/admin					controllers.Matches.admin()
 POST	/resultats					controllers.Matches.setResultats(id)
 POST	/calcul					controllers.Pronostiques.calculPoints()
+
+# Other pronostics page
+GET		/otherpronostics					controllers.Pronostiques.otherPronostics(pseudoUser,idJournee)

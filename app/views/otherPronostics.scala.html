@@ -1,0 +1,85 @@
+@(test: List[Matche],pronostiques: List[Pronostique], user: Utilisateur, userSelectionne: Utilisateur, journees: List[Journee], journee: Journee)
+@import helper.twitterBootstrap._
+
+@main(user) {	
+	<h1>Liste des matches</h1>
+	<div class="row">
+		<div class="span3 offset4">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<td colspan="3">
+						<select id="journeeSelect" name="journee" size="1" onchange="javascript:submitJournee('/otherpronostics?pseudoUser=@userSelectionne.getPseudo()&idJournee=')">
+							@for(journeeTemp <- journees) {
+								@if(journeeTemp==journee) {
+									<option value="@journeeTemp.id" selected="selected">@journeeTemp.getNomJournee()
+								} else {
+									<option value="@journeeTemp.id">@journeeTemp.getNomJournee()
+								}
+							}
+						</select></td>
+
+					</tr>
+					<tr>
+						<th>Domicile</th>
+						<th></th>
+						<th style="text-align:right;">Ext&eacute;rieur</th>
+					</tr>
+				</thead>
+				<tbody>	
+					@for(matchTemp <- test) {
+						@helper.form(routes.Pronostiques.save(matchTemp.id.toString())) {
+							@if(!pronostiques.isEmpty() && !pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).isEmpty()){
+								@if(matchTemp.getScoreEquipe1==pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1() && matchTemp.getScoreEquipe2==pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()) {
+									<tr>
+										<td>@matchTemp.getEquipe1().getNom()</td>
+										<td style="text-align: center;">@pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1() - @pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
+										<br/><p style="color:green;">@matchTemp.getScoreEquipe1 - @matchTemp.getScoreEquipe2 (15)</p>
+										</td>
+										<td style="text-align:right;">@matchTemp.getEquipe2().getNom()</td>
+									</tr>
+								} else {
+									@if(matchTemp.getScoreEquipe1>matchTemp.getScoreEquipe2 && pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1()>pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
+									|| matchTemp.getScoreEquipe1==matchTemp.getScoreEquipe2 && pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1()==pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
+									|| matchTemp.getScoreEquipe1<matchTemp.getScoreEquipe2 && pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1()<pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
+									) {
+										<tr>
+											<td>@matchTemp.getEquipe1().getNom()</td>
+											<td style="text-align: center;">@pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1() - @pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
+											<br/><p style="color:orange;">@matchTemp.getScoreEquipe1 - @matchTemp.getScoreEquipe2 (10)</p>
+											</td>
+											<td style="text-align:right;">@matchTemp.getEquipe2().getNom()</td>
+										</tr>
+									} else {
+										<tr>
+											<td>@matchTemp.getEquipe1().getNom()</td>
+											<td style="text-align: center;">@pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1() - @pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
+											<br/><p style="color:red;">@matchTemp.getScoreEquipe1 - @matchTemp.getScoreEquipe2 (0)</p>
+											</td>
+											<td style="text-align:right;">@matchTemp.getEquipe2().getNom()</td>
+										</tr>
+									}
+								}
+							}else{
+								<tr>
+									<td>@matchTemp.getEquipe1().getNom()</td>
+									<td>Match non pronostiqu&eacute; par @userSelectionne.getPseudo()</td>
+									<td style="text-align:right;">@matchTemp.getEquipe2().getNom()</td>
+								</tr>
+								}
+							}
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+}
+
+<script>
+	function submitJournee(path) {
+		var id = $('#journeeSelect').val();
+	 	document.location.href=path+id;
+	 }
+</script>

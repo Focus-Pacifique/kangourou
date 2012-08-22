@@ -29,53 +29,59 @@
 				<tbody>			
 					@for(matchTemp <- test) {
 						@helper.form(routes.Pronostiques.save(matchTemp.id.toString())) {
-							@if(!pronostiques.isEmpty() && !pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).isEmpty()){
-								<tr>
-									<td>@matchTemp.getEquipe1().getNom()</td>
-									<td style="text-align: center;">@pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1() - @pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
-									<input type="button" value="Changer" class="btn btn-warning btn-mini" onclick="javascript:pronostiquer('Pronostics_@matchTemp.id');"></td>
-									<td style="text-align:right;">@matchTemp.getEquipe2().getNom()</td>
-								</tr>
-								<tr id="Pronostics_@matchTemp.id" style="display:none;">
-									<td colspan="3" style="text-align: center;">
+								@if(!pronostiques.isEmpty() && !pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).isEmpty() && "NULL"!=matchTemp.getScoreEquipe1()) {
+									<tr>
+										<td>@matchTemp.getEquipe1().getNom()</td>
+										<td style="text-align: center;">@pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1() - @pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
+								@if(!pronostiques.isEmpty() && !pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).isEmpty() && null!=matchTemp.getScoreEquipe1()){
+								@if(matchTemp.getScoreEquipe1==pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1() && matchTemp.getScoreEquipe2==pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()) {
+									<br/><p style="color:green;">@matchTemp.getScoreEquipe1 - @matchTemp.getScoreEquipe2 (15)</p>
+								} else {
+									@if(matchTemp.getVainqueur()==pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getVainqueur()) {
+										<br/><p style="color:orange;">@matchTemp.getScoreEquipe1 - @matchTemp.getScoreEquipe2 (10)</p>
+									} else {
+										<br/><p style="color:red;">@matchTemp.getScoreEquipe1 - @matchTemp.getScoreEquipe2 (0)</p>
+									}
+								}
+							}else{
+							<input id="Valider_@matchTemp.id" type="button" value="Changer" class="btn btn-warning btn-mini" onclick="javascript:pronostiquer('Pronostics_@matchTemp.id');"></td>
+							}
+										<td style="text-align:right;">@matchTemp.getEquipe2().getNom()</td>
+									</tr>
+									<tr id="Pronostics_@matchTemp.id" style="display:none;">
+										<td colspan="3" style="text-align: center;">
+											<fieldset>
+												@helper.inputText(pronostiqueForm("pronoEquipe1"), '_label -> matchTemp.equipe1.getNom())
+												@helper.inputText(pronostiqueForm("pronoEquipe2"), '_label -> matchTemp.equipe2.getNom())
+											</fieldset>
+										<div class="actions">
+        	    							<input id="Valider_@matchTemp.id" type="submit" value="Valider" class="btn">
+     									</div>
+										</td>
+									</tr>
+							} else {
+								
+									<tr>
+										<td>@matchTemp.getEquipe1().getNom()</td>
+										<td><input id="Valider_@matchTemp.id" type="button" value="Pronostiquer" class="btn btn-success btn-mini" onclick="javascript:pronostiquer('Pronostics_@matchTemp.id');"></td>
+										<td style="text-align:right;">@matchTemp.getEquipe2().getNom()</td>
+									</tr>
+									<tr id="Pronostics_@matchTemp.id" style="display:none;">
+										<td colspan="3" style="text-align: center;">
 										<fieldset>
 											@helper.inputText(pronostiqueForm("pronoEquipe1"), '_label -> matchTemp.equipe1.getNom())
 											@helper.inputText(pronostiqueForm("pronoEquipe2"), '_label -> matchTemp.equipe2.getNom())
 										</fieldset>
-									<div class="actions">
-            							<input type="submit" value="Valider" class="btn">
-     								</div>
-									</td>
-								</tr>
-							}else{
-								<tr>
-									<td>@matchTemp.getEquipe1().getNom()</td>
-									<td><input type="button" value="Pronostiquer" class="btn btn-success btn-mini" onclick="javascript:pronostiquer('Pronostics_@matchTemp.id');"></td>
-									<td style="text-align:right;">@matchTemp.getEquipe2().getNom()</td>
-								</tr>
-								<tr id="Pronostics_@matchTemp.id" style="display:none;">
-									<td colspan="3" style="text-align: center;">
-									<fieldset>
-										@helper.inputText(pronostiqueForm("pronoEquipe1"), '_label -> matchTemp.equipe1.getNom())
-										@helper.inputText(pronostiqueForm("pronoEquipe2"), '_label -> matchTemp.equipe2.getNom())
-									</fieldset>
-									<div class="actions">
-            							<input type="submit" value="Valider" class="btn">
-     								</div>
-									</td>
-      							</tr>
+										<div class="actions">
+            								<input type="submit" value="Valider" class="btn">
+ 	    								</div>
+										</td>
+      								</tr>
 								}
 							}
 							</td>
 						</tr>
-					}	
-<!-- 					@for(pronostiqueTemp <- pronostiques) { -->
-<!-- 						<tr> -->
-<!-- 							<td colspan="3"> -->
-<!-- 							@pronostiqueTemp.getMatche().getEquipe1().getNom(): @pronostiqueTemp.getPronoEquipe1() @pronostiqueTemp.getMatche().getEquipe2().getNom(): @pronostiqueTemp.getPronoEquipe2() -->
-<!-- 							</td> -->
-<!-- 						</tr> -->
-<!-- 					}		 -->
+					}
 				</tbody>
 			</table>
 		</div>
@@ -92,4 +98,31 @@
 		var id = $('#journeeSelect').val();
 	 	document.location.href=path+id;
 	 }
+</script>
+<script>
+function checkDate() {
+	
+	today = new Date();
+	
+    var idJournee = $('#journeeSelect').val();
+    var indice = idJournee*10 + 1 - 10;
+    @for(matchTemp <- test) {
+    	var strDate = "@matchTemp.getDateMatche()";
+    	var dateParts = strDate.split(" ");
+
+    	var date = new Date(dateParts[0]+" "+dateParts[1]+" "+dateParts[2]+" "+dateParts[3]+" UTC+2 "+dateParts[5]);
+    	console.log(date);
+    	if (today > date) {
+    		$('#Valider_'+@matchTemp.getId()).attr("disabled", "disabled");
+    	}
+    }
+};
+
+function addEvent(obj, event, fct) {
+    if (obj.attachEvent) //Est-ce IE ?
+        obj.attachEvent("on" + event, fct); //Ne pas oublier le "on"
+    else
+        obj.addEventListener(event, fct, true);
+};
+addEvent(window , "load", checkDate);
 </script>
