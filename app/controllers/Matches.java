@@ -37,8 +37,8 @@ public class Matches extends Controller {
 	public static Result setResultats(String idMatche) {
 		Form<Matche> filledForm = matcheForm.bindFromRequest();
 		if(filledForm.hasErrors()) {
-			return badRequest(
-					views.html.index.render(Utilisateur.findByPseudo(request().username()),Utilisateur.find.orderBy().desc("points").findList())
+			return redirect(
+					routes.Application.index()
 			);
 		} else {
 			Matche matcheBase = Matche.findById(Long.parseLong(idMatche));

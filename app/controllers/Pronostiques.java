@@ -46,8 +46,8 @@ public class Pronostiques extends Controller  {
 				}
 		}
 		
-		return ok(
-			index.render(user,Utilisateur.find.orderBy().desc("points").findList())
+		return redirect(
+				routes.Application.index()
 		);
 			
 	}
@@ -80,8 +80,8 @@ public class Pronostiques extends Controller  {
 	public static Result save(String idMatche) {
 		Form<Pronostique> filledForm = pronostiqueForm.bindFromRequest();
 		if(filledForm.hasErrors()) {
-			return badRequest(
-					views.html.index.render(Utilisateur.findByPseudo(request().username()),Utilisateur.find.orderBy().desc("points").findList())
+			return redirect(
+					routes.Application.index()
 			);
 		} else {
 			Date maintenant = new Date();
@@ -126,8 +126,8 @@ public class Pronostiques extends Controller  {
 				}
 				return redirect(routes.Pronostiques.pronostics(idJournee));
 			} else {
-				return badRequest(
-						views.html.index.render(Utilisateur.findByPseudo(request().username()),Utilisateur.find.orderBy().desc("points").findList())
+				return redirect(
+						routes.Application.index()
 				);
 			}
 		}

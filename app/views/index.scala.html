@@ -1,4 +1,4 @@
-@(user: Utilisateur, listeUtilisateur: List[Utilisateur])
+@(user: Utilisateur, listeUtilisateur: List[Utilisateur], prochainMatch: Matche)
 
 @main(user){
 		
@@ -44,6 +44,50 @@
 				</tbody>
 			</table>
 		</div>
-	</div>	
+		<div class="span4">
+			Prochain match :
+			<FONT COLOR="blue" >@prochainMatch.getEquipe1().getNom() - @prochainMatch.getEquipe2().getNom()</FONT>  dans
+			<br>
+			<input type="text" id="time" size="5" style="border:none; box-shadow:none; background-color:white; cursor:default; width:330px;" disabled="disabled" /> 
+		</div>
+	</div>
+	
+	<script>
+	function runClock() {
+		  today   = new Date();
+		  var strDate = "@prochainMatch.getDateMatche()";
+	      var dateParts = strDate.split(" ");
+
+	      var date = new Date(dateParts[0]+" "+dateParts[1]+" "+dateParts[2]+" "+dateParts[3]+" UTC+2 "+dateParts[5]);
+		  
+	      var diff = date.getTime() - today.getTime();
+	      
+	      if(diff < 0) {
+			  	location.reload();
+			  	timeValue = "Maintenant !"
+		  } else {
+			  if (diff < 60000) {
+				  $('#time').attr("style","border:none; box-shadow:none; background-color:white; cursor:default; width:330px; color:red; text-decoration:blink;");
+			  }
+			  days = Math.floor(diff/(1000*60*60*24));
+			  diff = diff - (days*1000*60*60*24);
+			  hours = Math.floor(diff/(1000*60*60));
+			  diff = diff - (hours*1000*60*60);
+			  minutes = Math.floor(diff/(1000*60));
+			  diff = diff - (minutes*1000*60);
+			  seconds = Math.floor(diff/(1000));
+			  timeValue = days + " jours " + hours + " heures ";
+			  timeValue += ((minutes < 10) ? "0" : "") + minutes + " minutes et ";
+			  timeValue += ((seconds < 10) ? "0" : "") + seconds + " secondes";
+		  }
+
+		  // Les deux prochaines conditions ne servent que pour l'affichage.
+		  // Si le nombre de minute est inférieur à 10, alors on rajoute un 0 devant...
+
+		  document.getElementById("time").value = timeValue;
+		  timerRunning = true;
+	}
+	timerID = setInterval(runClock,1000);
+	</script>	
 	
 }
