@@ -21,9 +21,12 @@ GET		/inscription						controllers.Utilisateurs.inscription()
 POST	/inscription						controllers.Utilisateurs.save()
 
 # Admin page
-GET		/admin					controllers.Matches.admin()
-POST	/resultats					controllers.Matches.setResultats(id)
-POST	/calcul					controllers.Pronostiques.calculPoints()
+GET		/admin								controllers.Matches.admin()
+POST	/resultats							controllers.Matches.setResultats(id)
+POST	/calcul								controllers.Pronostiques.calculPoints()
 
 # Other pronostics page
 GET		/otherpronostics					controllers.Pronostiques.otherPronostics(pseudoUser,idJournee)
+
+# Membres page
+GET		/membres							controllers.Utilisateurs.membres()
