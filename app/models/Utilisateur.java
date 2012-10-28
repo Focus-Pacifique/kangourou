@@ -40,8 +40,20 @@ public class Utilisateur extends Model{
 	@NonEmpty
 	@Column(name = "password")
     public String password;
+	
+	@Column(name = "image")
+    public String image = "";
     
-    public static Finder<Long,Utilisateur> find = new Finder<Long,Utilisateur>(Long.class, Utilisateur.class); 
+    public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+
+	public static Finder<Long,Utilisateur> find = new Finder<Long,Utilisateur>(Long.class, Utilisateur.class); 
 
     public static Utilisateur findByPseudo(String pseudo) {
         return find.where().eq("pseudo", pseudo).findUnique();

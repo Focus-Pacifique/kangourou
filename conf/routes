@@ -30,3 +30,7 @@ GET		/otherpronostics					controllers.Pronostiques.otherPronostics(pseudoUser,id
 
 # Membres page
 GET		/membres							controllers.Utilisateurs.membres()
+
+# Profil utilisateur page
+GET		/profil								controllers.Utilisateurs.profil()
+POST	/profil								controllers.Utilisateurs.updateProfil(pseudo)
