@@ -1,0 +1,56 @@
+@(user: Utilisateur,form: Form[Utilisateur])
+
+@main(user){
+<div class="span8">
+<h2><b>Profil de @user.getPrenom() @user.getNom()</b></h2>
+<fieldset>
+	@helper.form(routes.Utilisateurs.updateProfil(user.getPseudo())) {
+	
+		@if(form.hasGlobalErrors) { 
+            <p class="error">@form.globalError.message</p>
+		}
+		@if(flash.contains("success")) {
+            <p class="success">@flash.get("success")</p>
+        }
+		<table class="table table-striped">
+			<tbody>	
+				<tr>
+					<td>Pr&eacute;nom</td>
+					<td>
+						<div class="clearfix error input" id="prenom">
+				        	<input type="text" name="prenom" id="prenom" value=@user.getPrenom()>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>Nom</td>
+					<td>
+						<div class="clearfix error input" id="nom">
+				        	<input type="text" name="nom" id="nom" value=@user.getNom()>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>Email</td>
+					<td>
+						<div class="clearfix error input" id="email">
+				        	<input type="text" name="email" id="email" value=@user.getEmail()>
+						</div>
+					</td>
+				</tr>
+					<td>Mot de passe</td>
+					<td>
+						<div class="clearfix error input" id="password">
+				        	<input type="password" name="password" id="password" value=@user.getPassword()>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+				<button class="btn" type="submit" onclick='return confirm("Voulez vous vraiment mettre vos informations &agrave; jour ?")'>Envoyer</button>
+				&nbsp;&nbsp;&nbsp;&nbsp;<a href="@routes.Application.index()" class="btn">Retour</a>
+	    }
+</fieldset>	
+</div>
+}
