@@ -1,29 +1,26 @@
 @(form: Form[Authentification.AuthenticatedUtilisateur])
 
 @main(null) {
-	<div class="row">
-		<div class="span2 offset1">
-			<fieldset>
-	   			 @helper.form(routes.Authentification.authenticate) {
-	   			 
-		   			 <h2>Sign in</h2>
-		   			 
-		   			 @if(form.hasGlobalErrors) { 
-		            	<p class="error">@form.globalError.message</p>
-		       		 }
+<center>
+	<fieldset>
+  			 @helper.form(routes.Authentification.authenticate) {
+  			 
+   			 <h2>Sign in</h2>
+   			 
+   			 @if(form.hasGlobalErrors) { 
+            	<p class="error">@form.globalError.message</p>
+       		 }
+
+	        @if(flash.contains("success")) {
+	            <p class="success">@flash.get("success")</p>
+	        }
 		
-			        @if(flash.contains("success")) {
-			            <p class="success">@flash.get("success")</p>
-			        }
-				
-					@helper.inputText(form("pseudo"),'_label->"Pseudo")
-					@helper.inputPassword(form("password"),'_label->"Password")
-					
-		   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="@routes.Utilisateurs.inscription()" class="btn">S'inscrire</a>
-		   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary" type="submit">Login</button>
-				}
-			</fieldset>   	
-		   	
-	   	</div>
-	</div>
+			@helper.inputText(form("pseudo"),'_label->"Pseudo")
+			@helper.inputPassword(form("password"),'_label->"Password")
+			
+   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="@routes.Utilisateurs.inscription()" class="btn">S'inscrire</a>
+   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary" type="submit">Login</button>
+		}
+	</fieldset>
+</center>
 }

@@ -1,0 +1,11 @@
+body {
+color:black;
+background-color:red;
+background-image:url("/assets/images/");
+}
+
+membre {
+	border-style : solid ;
+	width : 124px;
+	height : 150px;
+}
