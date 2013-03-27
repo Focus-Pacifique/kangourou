@@ -17,9 +17,13 @@ public class Application extends Controller {
 	  public static Result index() {
 		  Date maintenant = new Date();
 		  List<Matche> prochainMatchs = Matche.find.where().gt("dateMatche", maintenant).orderBy().asc("dateMatche").findList();
+		  Matche prochainMatch=new Matche();
+		  if (prochainMatchs.isEmpty()){
+			  prochainMatch=null;
+		  } else {
+			  prochainMatch = prochainMatchs.get(0);
+		  }
 		  
-		  Matche prochainMatch = prochainMatchs.get(0);
-	
 		  return ok(index.render(Utilisateur.findByPseudo(request().username()),Utilisateur.find.orderBy().desc("points").findList(),prochainMatch)
 				  );
 		  

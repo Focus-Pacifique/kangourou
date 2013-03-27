@@ -44,18 +44,28 @@
 				</tbody>
 			</table>
 		</div>
+		@if(prochainMatch!=null){
 		<div class="span4">
 			Prochain match :
 			<FONT COLOR="blue" >@prochainMatch.getEquipe1().getNom() - @prochainMatch.getEquipe2().getNom()</FONT>  dans
 			<br>
 			<input type="text" id="time" size="5" style="border:none; box-shadow:none; background-color:white; cursor:default; width:330px;" disabled="disabled" /> 
 		</div>
+		} else {
+		<div class="span4">
+			Prochain match :
+			<FONT COLOR="blue" >Pas de match programm&eacute dans les prochains jours</FONT>
+		</div>
+		}
 	</div>
 	
 	<script>
 	function runClock() {
 		  today   = new Date();
-		  var strDate = "@prochainMatch.getDateMatche()";
+		  var strDate = new Date();
+		  @if(prochainMatch!=null){
+			  strDate = "@prochainMatch.getDateMatche()";
+		  }
 	      var dateParts = strDate.split(" ");
 
 	      var date = new Date(dateParts[0]+" "+dateParts[1]+" "+dateParts[2]+" "+dateParts[3]+" UTC+2 "+dateParts[5]);
