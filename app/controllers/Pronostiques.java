@@ -60,7 +60,12 @@ public class Pronostiques extends Controller  {
 			Date maintenant = new Date();
 			
 			List<Journee> journeesFutures = Journee.find.where().gt("dateJournee", maintenant).orderBy().asc("dateJournee").findList();
-			idLong = journeesFutures.get(0).id;
+			if(!journeesFutures.isEmpty()){
+				idLong = journeesFutures.get(0).id;
+			} else {
+				List<Journee> journees = Journee.find.orderBy().desc("dateJournee").findList();
+				idLong = journees.get(0).id;
+			}
 		} else {
 			idLong = Long.parseLong(id);
 		}

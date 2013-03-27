@@ -39,23 +39,34 @@
 										<td style="text-align:right;">@matchTemp.getEquipe2().getNom()</td>
 									</tr>
 								} else {
-									@if(matchTemp.getScoreEquipe1>matchTemp.getScoreEquipe2 && pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1()>pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
-									|| matchTemp.getScoreEquipe1==matchTemp.getScoreEquipe2 && pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1()==pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
-									|| matchTemp.getScoreEquipe1<matchTemp.getScoreEquipe2 && pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1()<pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
-									) {
-										<tr>
-											<td>@matchTemp.getEquipe1().getNom()</td>
-											<td style="text-align: center;">@pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1() - @pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
-											<br/><p style="color:orange;">@matchTemp.getScoreEquipe1 - @matchTemp.getScoreEquipe2 (10)</p>
-											</td>
-											<td style="text-align:right;">@matchTemp.getEquipe2().getNom()</td>
-										</tr>
+								
+								@if(matchTemp.getScoreEquipe1!=null) {
+								
+										@if(matchTemp.getScoreEquipe1>matchTemp.getScoreEquipe2 && pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1()>pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
+										|| matchTemp.getScoreEquipe1==matchTemp.getScoreEquipe2 && pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1()==pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
+										|| matchTemp.getScoreEquipe1<matchTemp.getScoreEquipe2 && pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1()<pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
+										) {
+											<tr>
+												<td>@matchTemp.getEquipe1().getNom()</td>
+												<td style="text-align: center;">@pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1() - @pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
+												<br/><p style="color:orange;">@matchTemp.getScoreEquipe1 - @matchTemp.getScoreEquipe2 (10)</p>
+												</td>
+												<td style="text-align:right;">@matchTemp.getEquipe2().getNom()</td>
+											</tr>
+										} else {
+											<tr>
+												<td>@matchTemp.getEquipe1().getNom()</td>
+												<td style="text-align: center;">@pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1() - @pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
+												<br/><p style="color:red;">@matchTemp.getScoreEquipe1 - @matchTemp.getScoreEquipe2 (0)</p>
+												</td>
+												<td style="text-align:right;">@matchTemp.getEquipe2().getNom()</td>
+											</tr>
+										}
 									} else {
 										<tr>
 											<td>@matchTemp.getEquipe1().getNom()</td>
 											<td style="text-align: center;">@pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe1() - @pronostiques.filter(_.getMatche().id.equals(matchTemp.id)).head.getPronoEquipe2()
-											<br/><p style="color:red;">@matchTemp.getScoreEquipe1 - @matchTemp.getScoreEquipe2 (0)</p>
-											</td>
+												<br/><p style="color:gray;">Score non calcul&eacute;</p></td>
 											<td style="text-align:right;">@matchTemp.getEquipe2().getNom()</td>
 										</tr>
 									}
