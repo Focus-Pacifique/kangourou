@@ -4,7 +4,7 @@
 		
 	<div class="row">
 		<div class="span8">
-			<h1>Les pronostics pour les vrais bonhommes !!</h1>
+			<h1>Les pronostiques pour les vrais bonhommes !!</h1>
 			</br>
 	
 			<img src="@routes.Assets.at("images/dikkenek.jpg")">
@@ -18,28 +18,37 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
+						<td>#</td>
 						<td>Pseudo</td>
 						<td>Points</td>
 					</tr>
 						
 				</thead>
 				<tbody>	
-					@for(utilisateurTemp <- listeUtilisateur) {
-						@if(utilisateurTemp.getPseudo()==user.getPseudo()) {
-							<tr>
-								<td>									
-									<FONT COLOR="green">@utilisateurTemp.getPseudo()</FONT>
-								</td>
-								<td><FONT COLOR="green" >@utilisateurTemp.getPoints()</FONT></td>
-							</tr>
-						} else {
-							<tr>
-								<td><a href="@routes.Pronostiques.otherPronostics(utilisateurTemp.getPseudo(),"0")">
+					@for((utilisateurTemp, index) <- listeUtilisateur.zipWithIndex) {
+						<tr>
+							<td>
+							@if(index<3) {
+								@index match {
+								    case 0 => {<div><img src="@routes.Assets.at("images/1st.png")"></div>}
+								    case 1 => {<img src="@routes.Assets.at("images/2nd.png")">}
+								    case 2 => {<img src="@routes.Assets.at("images/3rd.png")">}
+								}
+							} else {
+								@{index+1}
+							}
+							</td>
+							@if(utilisateurTemp.getPseudo()==user.getPseudo()) {
+								<td vertical-align="middle"><FONT COLOR="green">@utilisateurTemp.getPseudo()</FONT></td>
+								<td style="vertical-align: middle"><FONT COLOR="green">@utilisateurTemp.getPoints()</FONT></td>
+							} else {
+								<td style="vertical-align: middle">
+									<a href="@routes.Pronostiques.otherPronostics(utilisateurTemp.getPseudo(),"0")"/>
 									<FONT COLOR="black" >@utilisateurTemp.getPseudo()</FONT>
 								</td>
-								<td><FONT COLOR="black" >@utilisateurTemp.getPoints()</FONT></td>
-							</tr>
-						}
+								<td style="vertical-align: middle"><FONT COLOR="black" >@utilisateurTemp.getPoints()</FONT></td>
+							}
+						</tr>
 					}
 				</tbody>
 			</table>
