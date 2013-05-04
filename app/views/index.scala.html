@@ -1,4 +1,4 @@
-@(user: Utilisateur, listeUtilisateur: List[Utilisateur], prochainMatch: Matche)
+@(user: Utilisateur, prochainMatch: Matche)
 
 @main(user){
 	<div id="imgIndex">
@@ -19,7 +19,57 @@
 			Meilleur pronostiqueur de la semaine :
 			<br>
 			Pire pronostiqueur de la semaine :
-		</div>
-		
+		</div>		
 	</div>
+	<div class="prochainMatch">
+		@if(prochainMatch!=null){
+			Prochain match :
+			<FONT COLOR="blue" >@prochainMatch.getEquipe1().getNom() - @prochainMatch.getEquipe2().getNom()</FONT>  dans
+			<br>
+			<input type="text" id="time" size="5" style="border:none; box-shadow:none; background-color:white; cursor:default; width:300px;" disabled="disabled" /> 
+		} else {
+			Prochain match :
+			<FONT COLOR="blue" >Pas de match programm&eacute dans les prochains jours</FONT>
+		}
+	</div>
+	<script>
+	function runClock() {
+		  today   = new Date();
+		  var strDate = new Date();
+		  @if(prochainMatch!=null){
+			  strDate = "@prochainMatch.getDateMatche()";
+		  }
+	      var dateParts = strDate.split(" ");
+
+	      var date = new Date(dateParts[0]+" "+dateParts[1]+" "+dateParts[2]+" "+dateParts[3]+" UTC+2 "+dateParts[5]);
+		  
+	      var diff = date.getTime() - today.getTime();
+	      
+	      if(diff < 0) {
+			  	location.reload();
+			  	timeValue = "Maintenant !"
+		  } else {
+			  if (diff < 60000) {
+				  $('#time').attr("style","border:none; box-shadow:none; background-color:white; cursor:default; width:300px; color:red; text-decoration:blink;");
+			  }
+			  days = Math.floor(diff/(1000*60*60*24));
+			  diff = diff - (days*1000*60*60*24);
+			  hours = Math.floor(diff/(1000*60*60));
+			  diff = diff - (hours*1000*60*60);
+			  minutes = Math.floor(diff/(1000*60));
+			  diff = diff - (minutes*1000*60);
+			  seconds = Math.floor(diff/(1000));
+			  timeValue = days + " jours " + hours + " heures ";
+			  timeValue += ((minutes < 10) ? "0" : "") + minutes + " minutes et ";
+			  timeValue += ((seconds < 10) ? "0" : "") + seconds + " secondes";
+		  }
+
+		  // Les deux prochaines conditions ne servent que pour l'affichage.
+		  // Si le nombre de minute est inférieur à 10, alors on rajoute un 0 devant...
+
+		  document.getElementById("time").value = timeValue;
+		  timerRunning = true;
+	}
+	timerID = setInterval(runClock,1000);
+	</script>
 }
