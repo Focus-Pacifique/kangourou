@@ -1,112 +1,25 @@
 @(user: Utilisateur, listeUtilisateur: List[Utilisateur], prochainMatch: Matche)
 
 @main(user){
-		
-	<div class="row">
-		<div class="span8">
-			<h1>Les pronostiques pour les vrais bonhommes !!</h1>
-			</br>
-	
-			<img src="@routes.Assets.at("images/dikkenek.jpg")">
-			<br/>
-			<h2>R&egrave;gles</h2>
-			<br/>
-			<ol><li>Trouver le vainqueur rapporte 10 points</li>
-			<li>Pronostiquer le bon score rapporte 5 points</li></ol>
+	<div id="imgIndex">
+		<div class="titre">
+			<center>
+				<h2>Les pronostiques pour les vrais bonhommes !!</h2>
+			</center>
 		</div>
-		<div class="span4">
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<td>#</td>
-						<td>Pseudo</td>
-						<td>Points</td>
-					</tr>
-						
-				</thead>
-				<tbody>	
-					@for((utilisateurTemp, index) <- listeUtilisateur.zipWithIndex) {
-						<tr>
-							<td>
-							@if(index<3) {
-								@index match {
-								    case 0 => {<div><img src="@routes.Assets.at("images/1st.png")"></div>}
-								    case 1 => {<img src="@routes.Assets.at("images/2nd.png")">}
-								    case 2 => {<img src="@routes.Assets.at("images/3rd.png")">}
-								}
-							} else {
-								@{index+1}
-							}
-							</td>
-							@if(utilisateurTemp.getPseudo()==user.getPseudo()) {
-								<td vertical-align="middle"><FONT COLOR="green">@utilisateurTemp.getPseudo()</FONT></td>
-								<td style="vertical-align: middle"><FONT COLOR="green">@utilisateurTemp.getPoints()</FONT></td>
-							} else {
-								<td style="vertical-align: middle">
-									<a href="@routes.Pronostiques.otherPronostics(utilisateurTemp.getPseudo(),"0")"/>
-									<FONT COLOR="black" >@utilisateurTemp.getPseudo()</FONT>
-								</td>
-								<td style="vertical-align: middle"><FONT COLOR="black" >@utilisateurTemp.getPoints()</FONT></td>
-							}
-						</tr>
-					}
-				</tbody>
-			</table>
+		<div class="blocImage">
+			<div class="image">
+				<center><img src="@routes.Assets.at("images/ste.jpg")"></center>
+			</div>
 		</div>
-		@if(prochainMatch!=null){
-		<div class="span4">
-			Prochain match :
-			<FONT COLOR="blue" >@prochainMatch.getEquipe1().getNom() - @prochainMatch.getEquipe2().getNom()</FONT>  dans
+		<div class="news">
+			<h2>News</h2>
+			A toi de jouer guillaume !!
 			<br>
-			<input type="text" id="time" size="5" style="border:none; box-shadow:none; background-color:white; cursor:default; width:330px;" disabled="disabled" /> 
+			Meilleur pronostiqueur de la semaine :
+			<br>
+			Pire pronostiqueur de la semaine :
 		</div>
-		} else {
-		<div class="span4">
-			Prochain match :
-			<FONT COLOR="blue" >Pas de match programm&eacute dans les prochains jours</FONT>
-		</div>
-		}
+		
 	</div>
-	
-	<script>
-	function runClock() {
-		  today   = new Date();
-		  var strDate = new Date();
-		  @if(prochainMatch!=null){
-			  strDate = "@prochainMatch.getDateMatche()";
-		  }
-	      var dateParts = strDate.split(" ");
-
-	      var date = new Date(dateParts[0]+" "+dateParts[1]+" "+dateParts[2]+" "+dateParts[3]+" UTC+2 "+dateParts[5]);
-		  
-	      var diff = date.getTime() - today.getTime();
-	      
-	      if(diff < 0) {
-			  	location.reload();
-			  	timeValue = "Maintenant !"
-		  } else {
-			  if (diff < 60000) {
-				  $('#time').attr("style","border:none; box-shadow:none; background-color:white; cursor:default; width:330px; color:red; text-decoration:blink;");
-			  }
-			  days = Math.floor(diff/(1000*60*60*24));
-			  diff = diff - (days*1000*60*60*24);
-			  hours = Math.floor(diff/(1000*60*60));
-			  diff = diff - (hours*1000*60*60);
-			  minutes = Math.floor(diff/(1000*60));
-			  diff = diff - (minutes*1000*60);
-			  seconds = Math.floor(diff/(1000));
-			  timeValue = days + " jours " + hours + " heures ";
-			  timeValue += ((minutes < 10) ? "0" : "") + minutes + " minutes et ";
-			  timeValue += ((seconds < 10) ? "0" : "") + seconds + " secondes";
-		  }
-
-		  // Les deux prochaines conditions ne servent que pour l'affichage.
-		  // Si le nombre de minute est inférieur à 10, alors on rajoute un 0 devant...
-
-		  document.getElementById("time").value = timeValue;
-		  timerRunning = true;
-	}
-	timerID = setInterval(runClock,1000);
-	</script>	
-	
 }
