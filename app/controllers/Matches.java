@@ -18,10 +18,11 @@ import views.html.admin;
 public class Matches extends Controller {
 	
 	static Form<Matche> matcheForm = form(Matche.class);
+	
 
-	public static Result admin() {
-		Utilisateur user = Utilisateur.findByPseudo(request().username());
+	public static Result admin() {		
 		
+		Utilisateur user = Utilisateur.findByPseudo(request().username());
 		
 		/***************************************************/
 		/*  RAJOUTER LES MATCHS PAR JOURNEE ET PAS TOUS   */		
@@ -33,6 +34,22 @@ public class Matches extends Controller {
 		admin.render(matches,user,matcheForm)
 		);		
 	}
+	
+	public static Result ajoutMatche() {
+	
+		Utilisateur user = Utilisateur.findByPseudo(request().username());
+        Form<Matche> filledForm = matcheForm.bindFromRequest();
+        System.out.println(filledForm.toString());
+       if(filledForm.hasErrors()) {
+    	   return redirect(
+					routes.Application.index()
+			);
+        } else {
+            Matche matche = filledForm.get();
+			matche.save();
+			return redirect(routes.Matches.admin());  
+        }
+    }
 	
 	public static Result setResultats(String idMatche) {
 		Form<Matche> filledForm = matcheForm.bindFromRequest();
