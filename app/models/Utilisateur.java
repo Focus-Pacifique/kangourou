@@ -18,26 +18,26 @@ import play.mvc.Result;
 public class Utilisateur extends Model{
 	
 	@Id
-    @NonEmpty
+	@Required
     @Column
     public String pseudo;
 	
-    @NonEmpty
+	@Required
 	@Column(name = "nom")
     public String nom;
     
-    @NonEmpty
+    @Required
 	@Column(name = "prenom")
     public String prenom;
 	
-    @NonEmpty
+    @Required
 	@Column(name = "email")
     public String email;
     
 	@Column(name = "points")
     public Integer points;
     
-	@NonEmpty
+	@Required
 	@Column(name = "password")
     public String password;
 	

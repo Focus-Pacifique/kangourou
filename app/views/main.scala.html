@@ -27,7 +27,6 @@
 					<a class="brand" href="@routes.Application.index()">Prono 3000</a>
 						<li><a href="@routes.Application.index()">Accueil</a></li>
 						<li><a href="@routes.Pronostiques.pronostics("0")">Pronostique</a></li>
-						<li><a href="@routes.Recettes.listRecettes()">Recettes</a></li>
 						<li><a href="@routes.Utilisateurs.membres()">Membres</a></li>
 						@if(user != null) {
                             <li><a href="@routes.Utilisateurs.profil()">@user.pseudo (@user.points point(s))</a></li>

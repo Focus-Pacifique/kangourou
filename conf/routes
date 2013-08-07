@@ -4,8 +4,8 @@
 
 # Application page
 GET     /                           		controllers.Application.index()
-POST	/upload								controllers.Application.upload()
-GET		/upload								controllers.Application.affiche()
+#POST	/upload								controllers.Application.upload()
+#GET		/upload								controllers.Application.affiche()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               		controllers.Assets.at(path="/public", file)
@@ -40,17 +40,17 @@ GET		/profil								controllers.Utilisateurs.profil()
 POST	/profil								controllers.Utilisateurs.updateProfil(pseudo)
 
 # Recette page
-GET		/recettes							controllers.Recettes.listRecettes()
-GET		/recettes/ingredients				controllers.Recettes.listIngredients()
-POST	/recettes/ajoutIngredient			controllers.Recettes.ajoutIngredient()
-GET		/recettes/unites					controllers.Recettes.listUnites()
-POST	/recettes/ajoutUnite				controllers.Recettes.ajoutUnite()
+#GET		/recettes							controllers.Recettes.listRecettes()
+#GET		/recettes/ingredients				controllers.Recettes.listIngredients()
+#POST	/recettes/ajoutIngredient			controllers.Recettes.ajoutIngredient()
+#GET		/recettes/unites					controllers.Recettes.listUnites()
+#POST	/recettes/ajoutUnite				controllers.Recettes.ajoutUnite()
 #GET		/recettes/recette					controllers.Recettes.listRecette()
-POST	/recettes/ajoutRecette				controllers.Recettes.ajoutRecette()
-GET		/recettes/ajoutRecette				controllers.Recettes.pageAjoutRecette()
-POST	/recettes/ajoutMappingRecette		controllers.Recettes.ajoutMappingRecette(idRecette)
-POST	/recettes/updateRecette				controllers.Recettes.updateRecette(idRecette)
-GET		/recette							controllers.Recettes.afficherRecette(idRecette)
+#POST	/recettes/ajoutRecette				controllers.Recettes.ajoutRecette()
+#GET		/recettes/ajoutRecette				controllers.Recettes.pageAjoutRecette()
+#POST	/recettes/ajoutMappingRecette		controllers.Recettes.ajoutMappingRecette(idRecette)
+#POST	/recettes/updateRecette				controllers.Recettes.updateRecette(idRecette)
+#GET		/recette							controllers.Recettes.afficherRecette(idRecette)
 
 #Erreur
 #GET		/erreur								controllers.
