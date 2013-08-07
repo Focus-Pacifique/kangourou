@@ -5,7 +5,10 @@ import java.util.List;
 
 import models.Journee;
 import models.Matche;
+import models.PointsSaison;
 import models.Pronostique;
+import models.Saison;
+import models.Sys_parameter;
 import models.Utilisateur;
 import play.data.Form;
 import play.mvc.Controller;
@@ -70,15 +73,26 @@ public class Pronostiques extends Controller  {
 			idLong = Long.parseLong(id);
 		}
 		Utilisateur user = Utilisateur.findByPseudo(request().username());
-		List<Journee> journees = Journee.find.all();
+		
+		Sys_parameter system = Sys_parameter.find.byId((long) 1);
+		Saison saison = system.getSaisonEnCours();
+		Journee premiereJournee = saison.getPremiereJournee();
+		Journee derniereJournee= saison.getDerniereJournee();
+		
+		List<Journee> journees = Journee.find.where().le("id", derniereJournee.getId()).ge("id", premiereJournee.getId()).findList();
 		Journee journee = Journee.find.byId(idLong);
+		List<Utilisateur> users = Utilisateur.find.orderBy().desc("points").findList();
 		
 		List<Matche> matches = Journee.findMatchesById(idLong);
+		
+		Integer points = PointsSaison.find.where().eq("saison", saison).eq("user", user).findList().get(0).pointsTotalSaison;
+		
+		List<PointsSaison> pointsSaisons = PointsSaison.find.where().eq("saison", saison).orderBy().desc("pointsTotalSaison").findList();
 		
 		List<Pronostique> pronostiques = Pronostique.find.where().eq("utilisateur",user).findList();
 		pronostiqueForm = form(Pronostique.class);
 		return ok(
-		pronosticsForm.render(matches,pronostiques,pronostiqueForm,user,journees,journee)
+		pronosticsForm.render(matches,pronostiques,pronostiqueForm,user,pointsSaisons,journees,journee,points)
 		);
 	}
   
@@ -142,7 +156,12 @@ public class Pronostiques extends Controller  {
 		Long idLong;
 		
 		Date maintenant = new Date();
-		List<Journee> journeesPassees = Journee.find.where().lt("dateJournee", maintenant).orderBy().desc("dateJournee").findList();
+		Sys_parameter system = Sys_parameter.find.byId((long) 1);
+		Saison saison = system.getSaisonEnCours();
+		Journee premiereJournee = saison.getPremiereJournee();
+		Journee derniereJournee= saison.getDerniereJournee();
+		
+		List<Journee> journeesPassees = Journee.find.where().le("id", derniereJournee.getId()).ge("id", premiereJournee.getId()).lt("dateJournee", maintenant).orderBy().desc("dateJournee").findList();
 		
 		if (idJournee.equalsIgnoreCase("0")) {
 			idLong = journeesPassees.get(0).id;
@@ -155,11 +174,13 @@ public class Pronostiques extends Controller  {
 		
 		Utilisateur userSelectionne = Utilisateur.findByPseudo(pseudoUser);
 		
+		Integer points = PointsSaison.find.where().eq("saison", saison).eq("user", user).findList().get(0).pointsTotalSaison;
+		
 		List<Matche> matches = Journee.findMatchesById(idLong);
 		
 		List<Pronostique> pronostiques = Pronostique.find.where().eq("utilisateur",userSelectionne).findList();
 		return ok(
-		otherPronostics.render(matches,pronostiques,user,userSelectionne,journeesPassees,journee)
+		otherPronostics.render(matches,pronostiques,user,userSelectionne,journeesPassees,journee,points)
 		);
 	}
 	  

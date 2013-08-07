@@ -68,7 +68,9 @@ public class Journee extends Model{
     @Column(name="dateJournee")
     public Date dateJournee;
     
-    
+    public Long getId() {
+    	return this.id;
+    }
     
 	public String getNomJournee() {
 		return nomJournee;

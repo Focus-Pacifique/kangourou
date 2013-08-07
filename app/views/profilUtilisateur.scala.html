@@ -1,6 +1,6 @@
-@(user: Utilisateur,form: Form[Utilisateur])
+@(user: Utilisateur,form: Form[Utilisateur], points: Integer)
 
-@main(user){
+@main(user, points){
 <div class="span8">
 <h2><b>Profil de @user.getPrenom() @user.getNom()</b></h2>
 <fieldset>

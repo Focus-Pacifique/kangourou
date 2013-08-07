@@ -5,7 +5,10 @@ import java.util.List;
 
 import models.Journee;
 import models.Matche;
+import models.PointsSaison;
 import models.Pronostique;
+import models.Saison;
+import models.Sys_parameter;
 import models.Utilisateur;
 import play.data.Form;
 import play.mvc.Controller;
@@ -29,9 +32,11 @@ public class Matches extends Controller {
 		/*************************************************/
 		
 		List<Matche> matches = Matche.find.all();
-		
+		Sys_parameter system = Sys_parameter.find.byId((long) 1);
+		Saison saison = system.getSaisonEnCours();
+		Integer points = PointsSaison.find.where().eq("saison", saison).eq("user", user).findList().get(0).pointsTotalSaison;
 		return ok(
-		admin.render(matches,user,matcheForm)
+		admin.render(matches,user,matcheForm,points)
 		);		
 	}
 	

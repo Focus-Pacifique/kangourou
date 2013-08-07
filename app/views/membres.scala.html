@@ -1,6 +1,6 @@
-@(user: Utilisateur, listeUtilisateur: List[Utilisateur])
+@(user: Utilisateur, listeUtilisateur: List[Utilisateur], points: Integer)
 
-@main(user){
+@main(user, points){
 	<div class="row">
 		@for(membre <- listeUtilisateur) {
 			<membre>

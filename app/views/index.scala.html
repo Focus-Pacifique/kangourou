@@ -1,7 +1,53 @@
-@(user: Utilisateur, prochainMatch: Matche)
+@(user: Utilisateur, pointsSaisons: List[PointsSaison], prochainMatch: Matche, points: Integer)
 
-@main(user){
+@main(user, points){
+	<div class="btn-classement" margin="5px">
+		<center><input id="Afficher_classement" type="button" value="Afficher le classement" class="btn btn-info btn-large" padding="300px" onclick="javascript:afficher('classement');"></center>
+	</div>
+	<div>
+	<br></div>
 	<div id="imgIndex">
+		
+		<div id="classement" style="display:none;" class="news">
+			<table class="table table-striped">
+            	<thead>
+                	<tr>
+                    	<td>#</td>
+                        <td>Pseudo</td>
+                        <td>Points</td>
+                	</tr>
+
+                </thead>
+				<tbody>
+                @for((pointsSaisonsTemp, index) <- pointsSaisons.zipWithIndex) {
+                	<tr>
+                    	<td>
+							@if(index<3) {
+                            	@index match {
+                                	case 0 => {<div><img src="@routes.Assets.at("images/1st.png")"></div>}
+                                    case 1 => {<img src="@routes.Assets.at("images/2nd.png")">}
+                                    case 2 => {<img src="@routes.Assets.at("images/3rd.png")">}
+                                }
+                            } else {
+                            	@{index+1}
+                            }
+						</td>
+                        @if(pointsSaisonsTemp.getUser().getPseudo()==user.getPseudo()) {
+                            <td vertical-align="middle"><FONT COLOR="green">@pointsSaisonsTemp.getUser().getPseudo()</FONT></td>
+                            <td style="vertical-align: middle"><FONT COLOR="green">@pointsSaisonsTemp.getPointsTotalSaison() (@pointsSaisonsTemp.getNbFoisPremier())</FONT></td>
+                        } else {
+                            <td style="vertical-align: middle">
+                                <a href="@routes.Pronostiques.otherPronostics(pointsSaisonsTemp.getUser().getPseudo(),"0")"/>
+                                <FONT COLOR="black" >@pointsSaisonsTemp.getUser().getPseudo()</FONT>
+                            </td>
+                            <td style="vertical-align: middle"><FONT COLOR="black" >@pointsSaisonsTemp.getPointsTotalSaison() (@pointsSaisonsTemp.getNbFoisPremier())</FONT></td>
+                        }
+					</tr>
+				}
+				</tbody>
+			</table>
+        </div>
+		
 		<div class="titre">
 			<center>
 				<h2>Les pronostiques pour les vrais bonhommes !!</h2>
@@ -13,25 +59,28 @@
 			</div>
 		</div>
 		<div class="news">
-			<h2>News</h2>
-			A toi de jouer guillaume !!
+			<center><h2>News</h2></center>
+			A toi de jouer @user.getPseudo() !!
 			<br>
 			Meilleur pronostiqueur de la semaine :
 			<br>
 			Pire pronostiqueur de la semaine :
-		</div>		
+		</div>
+		<div class="news">
+			<center><br>
+			@if(prochainMatch!=null){
+				Prochain match :
+				<FONT COLOR="blue" >@prochainMatch.getEquipe1().getNom() - @prochainMatch.getEquipe2().getNom()</FONT>  dans
+				<br>
+				<input type="text" id="time" size="5" style="border:none; box-shadow:none; background-color:white; cursor:default; width:300px;" disabled="disabled" /> 
+			} else {
+				Prochain match :
+				<FONT COLOR="blue" >Pas de match programm&eacute dans les prochains jours</FONT>
+			}</center>
+		</div>
+		
 	</div>
-	<div class="prochainMatch">
-		@if(prochainMatch!=null){
-			Prochain match :
-			<FONT COLOR="blue" >@prochainMatch.getEquipe1().getNom() - @prochainMatch.getEquipe2().getNom()</FONT>  dans
-			<br>
-			<input type="text" id="time" size="5" style="border:none; box-shadow:none; background-color:white; cursor:default; width:300px;" disabled="disabled" /> 
-		} else {
-			Prochain match :
-			<FONT COLOR="blue" >Pas de match programm&eacute dans les prochains jours</FONT>
-		}
-	</div>
+	
 	<script>
 	function runClock() {
 		  today   = new Date();
@@ -71,5 +120,17 @@
 		  timerRunning = true;
 	}
 	timerID = setInterval(runClock,1000);
+	</script>
+	
+	<script>
+	function afficher(id) {
+	 	$('#'+id).toggle('slow');
+	 	var text = $('#Afficher_classement').val();
+	 	if (text=="Afficher le classement") {
+		 	$('#Afficher_classement').attr("value", "Masquer le classement");	 		
+	 	} else {
+	 		$('#Afficher_classement').attr("value", "Afficher le classement");	
+	 	}
+	 }
 	</script>
 }

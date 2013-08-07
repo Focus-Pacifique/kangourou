@@ -5,7 +5,10 @@ import java.util.List;
 
 import models.Journee;
 import models.Matche;
+import models.PointsSaison;
 import models.Pronostique;
+import models.Saison;
+import models.Sys_parameter;
 import models.Utilisateur;
 import play.api.mvc.MultipartFormData;
 import play.data.Form;
@@ -46,12 +49,18 @@ public class Utilisateurs extends Controller {
 	public static Result membres() {
 		Utilisateur user = Utilisateur.findByPseudo(request().username());
 		List<Utilisateur> listUser = Utilisateur.find.all();
-		return ok(membres.render(user,listUser));
+		Sys_parameter system = Sys_parameter.find.byId((long) 1);
+		Saison saison = system.getSaisonEnCours();
+		Integer points = PointsSaison.find.where().eq("saison", saison).eq("user", user).findList().get(0).pointsTotalSaison;
+		return ok(membres.render(user,listUser,points));
 	}
 	
 	public static Result profil() {
 		Utilisateur user = Utilisateur.findByPseudo(request().username());
-		return ok(profilUtilisateur.render(user,utilisateurForm));
+		Sys_parameter system = Sys_parameter.find.byId((long) 1);
+		Saison saison = system.getSaisonEnCours();
+		Integer points = PointsSaison.find.where().eq("saison", saison).eq("user", user).findList().get(0).pointsTotalSaison;
+		return ok(profilUtilisateur.render(user,utilisateurForm,points));
 	}
 	
 	public static Result updateProfil(String pseudo) {
