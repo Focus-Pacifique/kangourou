@@ -20,8 +20,8 @@ GET     /pronostics                         controllers.Pronostiques.pronostics(
 POST    /pronostics          				controllers.Pronostiques.save(idMatche)
 
 # Inscription page
-GET		/inscription						controllers.Utilisateurs.inscription()
-POST	/inscription						controllers.Utilisateurs.save()
+GET		/inscription						controllers.Inscriptions.inscription()
+POST	/inscription						controllers.Inscriptions.save()
 
 # Admin page
 GET		/admin								controllers.Matches.admin()
