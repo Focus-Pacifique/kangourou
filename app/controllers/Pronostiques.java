@@ -3,6 +3,7 @@ package controllers;
 import java.util.Date;
 import java.util.List;
 
+import models.Equipe;
 import models.Journee;
 import models.Matche;
 import models.PointsJournee;
@@ -35,8 +36,6 @@ public class Pronostiques extends Controller  {
 		Long idJournee = idMatch/10;
 		if (idMatch%10 != 0) {
 			idJournee++;
-			String log = "idJournee vaut: " + idJournee.toString(); 
-			System.out.println(log);
 		}
 		Journee journee = Journee.find.where().eq("id", idJournee).findUnique();
 		
@@ -76,8 +75,6 @@ public class Pronostiques extends Controller  {
 		Long idJournee = idMatch/10;
 		if (idMatch%10 != 0) {
 			idJournee++;
-			String log = "idJournee vaut: " + idJournee.toString(); 
-			System.out.println(log);
 		}
 		Journee journee = Journee.find.where().eq("id", idJournee).findUnique();
 		
@@ -228,10 +225,9 @@ public class Pronostiques extends Controller  {
 			test.setMatche(matche);
 			
 			test.setCalcule(false);
-			
 			if(test.getPronoEquipe1() > test.getPronoEquipe2()) {
 				test.setVainqueur(matche.getEquipe1());
-			}else if((test.getPronoEquipe1() < test.getPronoEquipe2())) {
+			}else if(test.getPronoEquipe1() < test.getPronoEquipe2()) {
 				test.setVainqueur(matche.getEquipe2());
 			}else {
 				test.setVainqueur(null);
@@ -255,7 +251,9 @@ public class Pronostiques extends Controller  {
 					Pronostique.create(test);
 				} else {
 					test.id = pronostic.get(0).getId();
-					Pronostique.update(test);
+					// Permet de mettre le champ "Vainqueur" à null en cas de modification de son prono. Chose que ne fonctionnait pas avant.
+					Pronostique.delete(test.id);
+					Pronostique.create(test);
 				}
 				return redirect(routes.Pronostiques.pronostics(idJournee));
 			} else {
