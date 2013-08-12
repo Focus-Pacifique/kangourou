@@ -3,6 +3,8 @@ package controllers;
 import java.util.Date;
 import java.util.List;
 
+import org.specs2.reporter.TextPrinter.Print;
+
 import models.Journee;
 import models.Matche;
 import models.PointsJournee;
@@ -15,6 +17,7 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
+import play.mvc.WebSocket.Out;
 import views.html.pronosticsForm;
 import views.html.index;
 import views.html.otherPronostics;
@@ -34,6 +37,7 @@ public class Pronostiques extends Controller  {
 		Long idJournee = idMatch/10;
 		if (idMatch%10 != 0) {
 			idJournee++;
+			System.out.println("idJournee vaut: " + idJournee.toString());
 		}
 		Journee journee = Journee.find.where().eq("id", idJournee).findUnique();
 		
