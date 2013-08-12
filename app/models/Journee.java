@@ -67,6 +67,9 @@ public class Journee extends Model{
     @DateTime(pattern="yyyy-MM-dd")
     @Column(name="dateJournee")
     public Date dateJournee;
+
+	@Column(name="calcule")
+	public Boolean calcule;
     
     public Long getId() {
     	return this.id;
@@ -78,6 +81,14 @@ public class Journee extends Model{
 
 	public void setNomJournee(String nomJournee) {
 		this.nomJournee = nomJournee;
+	}
+	
+	public Boolean getCalcule() {
+		return calcule;
+	}
+
+	public void setCalcule(Boolean bool) {
+		this.calcule = bool;
 	}
 
 	public Matche getMatche1() {

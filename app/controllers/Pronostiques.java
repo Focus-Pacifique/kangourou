@@ -5,6 +5,7 @@ import java.util.List;
 
 import models.Journee;
 import models.Matche;
+import models.PointsJournee;
 import models.PointsSaison;
 import models.Pronostique;
 import models.Saison;
@@ -25,7 +26,80 @@ public class Pronostiques extends Controller  {
 	static Form<Journee> journeeForm = form(Journee.class);
 	static Form<Matche> matcheForm = form(Matche.class);
 	
+	private static void scoreCorrect(Utilisateur user, Matche match){
+		Sys_parameter system = Sys_parameter.find.byId((long) 1);
+		Saison saison = system.getSaisonEnCours();
+
+		Long idMatch = match.getId();
+		Long idJournee = idMatch/10 + 1;
+		Journee journee = Journee.find.where().eq("id", idJournee).findUnique();
+		
+		PointsJournee pointsJournee = PointsJournee.find.where().eq("journee", journee).eq("user", user).findUnique();
+		if(null!=pointsJournee) {
+			pointsJournee.ajouterPoints(15);
+			pointsJournee.incrementerScoresCorrects();
+		} else{
+			PointsJournee pointsJourneeNew = new PointsJournee();
+			pointsJourneeNew.user=user;
+			pointsJourneeNew.journee=journee;
+			pointsJourneeNew.points=15;
+			pointsJourneeNew.scoresCorrects=1;
+			pointsJourneeNew.save();
+		}
+		
+		PointsSaison pointsSaison = PointsSaison.find.where().eq("user", user).eq("saison", saison).findUnique();
+		if(null!=pointsSaison) {
+			pointsSaison.ajouterPointsTotalSaison(15);
+			pointsSaison.incrementerTotalScoresCorrects();
+		} else{
+			PointsSaison pointsSaisonNew = new PointsSaison();
+			pointsSaisonNew.user=user;
+			pointsSaisonNew.saison=saison;
+			pointsSaisonNew.nbFoisPremier=0;
+			pointsSaisonNew.pointsTotalSaison=15;
+			pointsSaisonNew.totalScoresCorrects=1;
+			pointsSaisonNew.save();
+		}
+	}
+	
+	private static void bonVainqueur(Utilisateur user, Matche match) {
+		Sys_parameter system = Sys_parameter.find.byId((long) 1);
+		Saison saison = system.getSaisonEnCours();
+
+		Long idMatch = match.getId();
+		Long idJournee = idMatch/10 + 1;
+		Journee journee = Journee.find.where().eq("id", idJournee).findUnique();
+		
+		PointsJournee pointsJournee = PointsJournee.find.where().eq("user", user).eq("journee", journee).findUnique();
+		if(null!=pointsJournee) {
+			pointsJournee.ajouterPoints(10);
+		} else{
+			PointsJournee pointsJourneeNew = new PointsJournee();
+			pointsJourneeNew.user=user;
+			pointsJourneeNew.journee=journee;
+			pointsJourneeNew.points=10;
+			pointsJourneeNew.scoresCorrects=0;
+			pointsJourneeNew.save();
+		}
+		
+		PointsSaison pointsSaison = PointsSaison.find.where().eq("user", user).eq("saison", saison).findUnique();
+		if(null!=pointsSaison) {
+			pointsSaison.ajouterPointsTotalSaison(10);
+		} else{
+			PointsSaison pointsSaisonNew = new PointsSaison();
+			pointsSaisonNew.user=user;
+			pointsSaisonNew.saison=saison;
+			pointsSaisonNew.nbFoisPremier=0;
+			pointsSaisonNew.pointsTotalSaison=10;
+			pointsSaisonNew.totalScoresCorrects=0;
+			pointsSaisonNew.save();
+		}
+	}
+	
 	public static Result calculPoints() {
+		Sys_parameter system = Sys_parameter.find.byId((long) 1);
+		Saison saison = system.getSaisonEnCours();
+		
 		Utilisateur user = Utilisateur.findByPseudo(request().username());
 		List<Utilisateur> utilisateurs = Utilisateur.find.all();
 		List<Matche> matches = Matche.find.where().isNotNull("scoreEquipe1").findList();
@@ -37,9 +111,9 @@ public class Pronostiques extends Controller  {
 						Utilisateur utilisateur = prono.utilisateur;
 						if(prono.getVainqueur() == prono.getMatche().getVainqueur()) {
 							if( (prono.getPronoEquipe1() == prono.getMatche().getScoreEquipe1()) && (prono.getPronoEquipe2() == prono.getMatche().getScoreEquipe2()) ) {
-								utilisateur.ajouterPoints(15,utilisateur);
+								scoreCorrect(utilisateur, match);
 							} else {
-								utilisateur.ajouterPoints(10,utilisateur);
+								bonVainqueur(utilisateur, match);
 							}
 							
 						}
@@ -48,6 +122,33 @@ public class Pronostiques extends Controller  {
 					}
 				}
 		}
+		
+		List<Journee> journees = Journee.find.where().eq("calcule", 0).findList();
+		
+		for (Journee journee : journees) {
+			List<PointsJournee> pointsJournees = PointsJournee.find.where().eq("journee", journee).orderBy().desc("points").findList();
+			if (!pointsJournees.isEmpty()) {
+				Utilisateur premier = pointsJournees.get(0).getUser();
+				Integer scorePremier = pointsJournees.get(0).getPoints();
+				
+				PointsSaison pointsSaison = PointsSaison.find.where().eq("user", premier).eq("saison", saison).findUnique();
+				pointsSaison.incrementerNbFoisPremier();
+				Integer i = 1;
+				
+				while (pointsJournees.size()!=i && pointsJournees.get(i).getPoints()==scorePremier) {
+					Utilisateur egalite = pointsJournees.get(i).getUser();
+					
+					PointsSaison pointsSaisonEgalite = PointsSaison.find.where().eq("user", egalite).eq("saison", saison).findUnique();
+					pointsSaison.incrementerNbFoisPremier();
+					
+					i++;
+				}
+				
+			}
+			journee.setCalcule(true);
+			journee.update();
+		}
+		
 		
 		return redirect(
 				routes.Application.index()
@@ -89,10 +190,12 @@ public class Pronostiques extends Controller  {
 		
 		List<PointsSaison> pointsSaisons = PointsSaison.find.where().eq("saison", saison).orderBy().desc("pointsTotalSaison").findList();
 		
+		PointsJournee pointsJournee = PointsJournee.find.where().eq("user", user).eq("journee", journee).findUnique();
+		
 		List<Pronostique> pronostiques = Pronostique.find.where().eq("utilisateur",user).findList();
 		pronostiqueForm = form(Pronostique.class);
 		return ok(
-		pronosticsForm.render(matches,pronostiques,pronostiqueForm,user,pointsSaisons,journees,journee,points)
+		pronosticsForm.render(matches,pronostiques,pronostiqueForm,user,pointsSaisons,journees,journee,points, pointsJournee)
 		);
 	}
   
@@ -178,9 +281,13 @@ public class Pronostiques extends Controller  {
 		
 		List<Matche> matches = Journee.findMatchesById(idLong);
 		
+		List<PointsSaison> pointsSaisons = PointsSaison.find.where().eq("saison", saison).orderBy().desc("pointsTotalSaison").findList();
+
+		PointsJournee pointsJournee = PointsJournee.find.where().eq("user", userSelectionne).eq("journee", journee).findUnique();
+		
 		List<Pronostique> pronostiques = Pronostique.find.where().eq("utilisateur",userSelectionne).findList();
 		return ok(
-		otherPronostics.render(matches,pronostiques,user,userSelectionne,journeesPassees,journee,points)
+		otherPronostics.render(matches,pronostiques,user,userSelectionne,pointsSaisons,journeesPassees,journee,points,pointsJournee)
 		);
 	}
 	  

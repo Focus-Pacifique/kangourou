@@ -39,6 +39,9 @@ GET		/membres							controllers.Utilisateurs.membres()
 GET		/profil								controllers.Utilisateurs.profil()
 POST	/profil								controllers.Utilisateurs.updateProfil(pseudo)
 
+# Statistiques
+GET /statistiques							controllers.Statistiques.getStat(id)
+
 # Recette page
 #GET		/recettes							controllers.Recettes.listRecettes()
 #GET		/recettes/ingredients				controllers.Recettes.listIngredients()

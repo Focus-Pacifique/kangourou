@@ -36,6 +36,16 @@ public class Inscriptions extends Controller {
             test.image = "images/inconnu.jpg";
             test.save();
 
+            Sys_parameter system = Sys_parameter.find.byId((long) 1);
+            Saison saison = system.getSaisonEnCours();
+
+            PointsSaison pointsSaison = new PointsSaison();
+            pointsSaison.user = test;
+            pointsSaison.saison = saison;
+            pointsSaison.pointsTotalSaison = 0;
+            pointsSaison.nbFoisPremier = 0;
+            pointsSaison.save();
+
             return redirect(routes.Authentification.login());  
         }
         //return redirect(routes.Authentification.login());  
