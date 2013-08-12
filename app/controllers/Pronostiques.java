@@ -3,8 +3,6 @@ package controllers;
 import java.util.Date;
 import java.util.List;
 
-import org.specs2.reporter.TextPrinter.Print;
-
 import models.Journee;
 import models.Matche;
 import models.PointsJournee;
