@@ -74,6 +74,11 @@ public class Pronostiques extends Controller  {
 
 		Long idMatch = match.getId();
 		Long idJournee = idMatch/10 + 1;
+		if (idMatch%10 != 0) {
+			idJournee++;
+			String log = "idJournee vaut: " + idJournee.toString(); 
+			System.out.println(log);
+		}
 		Journee journee = Journee.find.where().eq("id", idJournee).findUnique();
 		
 		PointsJournee pointsJournee = PointsJournee.find.where().eq("user", user).eq("journee", journee).findUnique();
