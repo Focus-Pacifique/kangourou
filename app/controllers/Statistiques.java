@@ -123,7 +123,7 @@ public class Statistiques extends Controller {
 		}
 		
 		// Plus grand nombre de fois premier
-		List<PointsSaison> classementFoisPremier = PointsSaison.find.where().eq("saison", saison).findList();
+		List<PointsSaison> classementFoisPremier = PointsSaison.find.where().eq("saison", saison).orderBy().desc("nbFoisPremier").findList();
 		i=1;
 		Integer maxFoisPremier = classementFoisPremier.get(0).getNbFoisPremier();
 		List<PointsSaison> nbFoisPremier = new ArrayList<PointsSaison>();
