@@ -73,7 +73,7 @@ public class Pronostiques extends Controller  {
 		Saison saison = system.getSaisonEnCours();
 
 		Long idMatch = match.getId();
-		Long idJournee = idMatch/10 + 1;
+		Long idJournee = idMatch/10;
 		if (idMatch%10 != 0) {
 			idJournee++;
 			String log = "idJournee vaut: " + idJournee.toString(); 
