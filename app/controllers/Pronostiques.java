@@ -37,7 +37,8 @@ public class Pronostiques extends Controller  {
 		Long idJournee = idMatch/10;
 		if (idMatch%10 != 0) {
 			idJournee++;
-			System.out.println("idJournee vaut: " + idJournee.toString());
+			String log = "idJournee vaut: " + idJournee.toString(); 
+			System.out.println(log);
 		}
 		Journee journee = Journee.find.where().eq("id", idJournee).findUnique();
 		
