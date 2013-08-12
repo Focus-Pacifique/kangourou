@@ -1,0 +1,64 @@
+@(user: Utilisateur, journees: List[Journee], journee: Journee, points: Integer, meilleurPronostiqueurs: List[PointsJournee],
+mauvaisPronostiqueurs: List[PointsJournee], pointsCorrectsJournee: List[PointsJournee], scoreCorrectsTotal: List[PointsSaison],
+scoresCorrectsUneJournee: List[PointsJournee], pointsUneJournee: List[PointsJournee], nbFoisPremier: List[PointsSaison])
+@import helper.twitterBootstrap._
+
+@main(user, points) {
+
+	<div class="row">
+                <div class="span12">
+                        <table class="table table-striped">
+                                <thead>
+                                        <tr>
+                                                <td colspan="6">
+                                                Statistiques de la <select id="journeeSelect" name="journee" size="1" onchange="javascript:submitJournee('/statistiques?id=')">
+                                                        @for(journeeTemp <- journees) {
+                                                                @if(journeeTemp==journee) {
+                                                                        <option value="@journeeTemp.id" selected="selected">@journeeTemp.getNomJournee()
+                                                                } else {
+                                                                        <option value="@journeeTemp.id">@journeeTemp.getNomJournee()
+                                                                }
+                                                        }
+                                                </select></td>
+                                                <td colspan="6"> Statistiques globales
+                                                </td>
+                                        </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+    <div class="row">
+    	<div class="span6">
+		<h3>Meilleur pronostiqueur de la journ&eacute;e : <FONT color="green">@for((meilleurPronostiqueurTemp, index) <- meilleurPronostiqueurs.zipWithIndex) {
+		@if(index!=0){/ }<a href="@routes.Pronostiques.otherPronostics(meilleurPronostiqueurTemp.getUser().getPseudo(),journee.id.toString())">@meilleurPronostiqueurTemp.getUser().getPseudo()</a>
+			} (@meilleurPronostiqueurs.get(0).getPoints() points)</FONT></h3>
+		<h3>Plus mauvais pronostiqueur de la journ&eacute;e : <FONT color="red">@for((mauvaisPronostiqueurTemp, index) <- mauvaisPronostiqueurs.zipWithIndex) {
+		@if(index!=0){/ }<a href="@routes.Pronostiques.otherPronostics(mauvaisPronostiqueurTemp.getUser().getPseudo(),journee.id.toString())">@mauvaisPronostiqueurTemp.getUser().getPseudo()</a>
+			} (@mauvaisPronostiqueurs.get(0).getPoints() points)</FONT></h3>
+		<h3>Plus grand nombre de scores corrects de la journ&eacute;e : <FONT color="green">@for((pointsCorrectsTemp, index) <- pointsCorrectsJournee.zipWithIndex) {
+		@if(index!=0){/ }<a href="@routes.Pronostiques.otherPronostics(pointsCorrectsTemp.getUser().getPseudo(),journee.id.toString())">@pointsCorrectsTemp.getUser().getPseudo()</a>
+			} (@pointsCorrectsJournee.get(0).getScoresCorrects() scores corrects)</FONT></h3>
+		</div>
+		<div class="span6">
+		<h3>Plus grand nombre de scores corrects au total : <FONT color="green">@for((pointsCorrectsTemp, index) <- scoreCorrectsTotal.zipWithIndex) {
+		@if(index!=0){/ }<a href="@routes.Pronostiques.otherPronostics(pointsCorrectsTemp.getUser().getPseudo(),"0")">@pointsCorrectsTemp.getUser().getPseudo()</a>
+			} (@scoreCorrectsTotal.get(0).getTotalScoresCorrects() scores corrects)</FONT></h3>
+		<h3>Plus grand nombre de scores corrects en une journ&eacute;e : <FONT color="green">@for((pointsCorrectsTemp, index) <- scoresCorrectsUneJournee.zipWithIndex) {
+		@if(index!=0){/ }<a href="@routes.Pronostiques.otherPronostics(pointsCorrectsTemp.getUser().getPseudo(),pointsCorrectsTemp.getJournee().getId().toString())">@pointsCorrectsTemp.getUser().getPseudo()</a>
+			} (@scoresCorrectsUneJournee.get(0).getScoresCorrects() scores corrects)</FONT></h3>
+		<h3>Meilleur score en une journ&eacute;e : <FONT color="green">@for((pointsCorrectsTemp, index) <- pointsUneJournee.zipWithIndex) {
+		@if(index!=0){/ }<a href="@routes.Pronostiques.otherPronostics(pointsCorrectsTemp.getUser().getPseudo(),pointsCorrectsTemp.getJournee().getId().toString())">@pointsCorrectsTemp.getUser().getPseudo()</a>
+			} (@pointsUneJournee.get(0).getPoints() points)</FONT></h3>
+		<h3>Plus grand nombre de fois premier : <FONT color="green">@for((foisPremierTemp, index) <- nbFoisPremier.zipWithIndex) {
+		@if(index!=0){/ }<a href="@routes.Pronostiques.otherPronostics(foisPremierTemp.getUser().getPseudo(),"0")">@foisPremierTemp.getUser().getPseudo()</a>
+			} (@nbFoisPremier.get(0).getNbFoisPremier() fois)</FONT></h3>
+		</div>
+	</div>
+}
+
+<script>
+        function submitJournee(path) {
+                var id = $('#journeeSelect').val();
+                document.location.href=path+id;
+         }
+</script>

@@ -1,10 +1,10 @@
-@(test: List[Matche],pronostiques: List[Pronostique], user: Utilisateur, userSelectionne: Utilisateur, journees: List[Journee], journee: Journee, points: Integer)
+@(test: List[Matche],pronostiques: List[Pronostique], user: Utilisateur, userSelectionne: Utilisateur, pointsSaisons: List[PointsSaison], journees: List[Journee], journee: Journee, points: Integer, pointsJournee: PointsJournee)
 @import helper.twitterBootstrap._
 
 @main(user, points) {	
 	<h1>Liste des matches</h1>
 	<div class="row">
-		<div class="span3 offset4">
+		<div class="span3 offset1">
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -20,6 +20,13 @@
 						</select></td>
 
 					</tr>
+					<tr>
+                    	@if(pointsJournee != null) {
+                        <td colspan="3">
+                        	Total de la journ&eacute;e : <b>@pointsJournee.getPoints()</b> points
+                        </td>
+                        }
+                    </tr>
 					<tr>
 						<th>Domicile</th>
 						<th></th>
@@ -85,6 +92,44 @@
 				</tbody>
 			</table>
 		</div>
+		<div class="span3 offset6">
+                        <table class="table table-striped">
+                                <thead>
+                                        <tr>
+                                                <td>#</td>
+                        <td>Pseudo</td>
+                        <td>Points</td>
+                    </tr>
+                                </thead>
+                                <tbody>
+                @for((pointsSaisonsTemp, index) <- pointsSaisons.zipWithIndex) {
+                        <tr>
+                        <td>
+                                                        @if(index<3) {
+                                @index match {
+                                        case 0 => {<div><img src="@routes.Assets.at("images/1st.png")"></div>}
+                                    case 1 => {<img src="@routes.Assets.at("images/2nd.png")">}
+                                    case 2 => {<img src="@routes.Assets.at("images/3rd.png")">}
+                                }
+                            } else {
+                                @{index+1}
+                            }
+                                                </td>
+                        @if(pointsSaisonsTemp.getUser().getPseudo()==user.getPseudo()) {
+                            <td vertical-align="middle"><a href="@routes.Pronostiques.pronostics("0")"/><FONT COLOR="green">@pointsSaisonsTemp.getUser().getPseudo()</FONT></td>
+                            <td style="vertical-align: middle"><FONT COLOR="green">@pointsSaisonsTemp.getPointsTotalSaison() (@pointsSaisonsTemp.getNbFoisPremier())</FONT></td>
+                        } else {
+                            <td style="vertical-align: middle">
+                                <a href="@routes.Pronostiques.otherPronostics(pointsSaisonsTemp.getUser().getPseudo(),"0")"/>
+                                <FONT COLOR="black" >@pointsSaisonsTemp.getUser().getPseudo()</FONT>
+                            </td>
+                            <td style="vertical-align: middle"><FONT COLOR="black" >@pointsSaisonsTemp.getPointsTotalSaison() (@pointsSaisonsTemp.getNbFoisPremier())</FONT></td>
+                        }
+                                        </tr>
+                                }
+                                </tbody>
+                        </table>
+                </div>
 	</div>
 }
 
