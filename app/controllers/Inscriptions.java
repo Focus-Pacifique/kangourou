@@ -44,6 +44,7 @@ public class Inscriptions extends Controller {
             pointsSaison.saison = saison;
             pointsSaison.pointsTotalSaison = 0;
             pointsSaison.nbFoisPremier = 0;
+            pointsSaison.totalScoresCorrects= 0;
             pointsSaison.save();
 
             return redirect(routes.Authentification.login());  
