@@ -130,8 +130,8 @@ public class Pronostiques extends Controller  {
 					}
 				}
 		}
-		
-		List<Journee> journees = Journee.find.where().eq("calcule", 0).findList();
+		Date maintenant = new Date();
+		List<Journee> journees = Journee.find.where().eq("calcule", 0).lt("dateJournee",maintenant).findList();
 		
 		for (Journee journee : journees) {
 			List<PointsJournee> pointsJournees = PointsJournee.find.where().eq("journee", journee).orderBy().desc("points").findList();
