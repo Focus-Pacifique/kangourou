@@ -147,7 +147,7 @@ public class Pronostiques extends Controller  {
 					Utilisateur egalite = pointsJournees.get(i).getUser();
 					
 					PointsSaison pointsSaisonEgalite = PointsSaison.find.where().eq("user", egalite).eq("saison", saison).findUnique();
-					pointsSaison.incrementerNbFoisPremier();
+					pointsSaisonEgalite.incrementerNbFoisPremier();
 					
 					i++;
 				}
