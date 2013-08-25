@@ -62,10 +62,16 @@ public class Statistiques extends Controller {
 		
 		// Plus mauvais de la journée
 		List<PointsJournee> classementPronostiqueurAscJournee = PointsJournee.find.where().eq("journee", journee).orderBy().asc("points").findList();
-		i=1;
-		Integer scoreDernier = classementPronostiqueurAscJournee.get(0).getPoints();
+		i=0;
+
 		List<PointsJournee> mauvaisPronostiqueurs = new ArrayList<PointsJournee>();
-		mauvaisPronostiqueurs.add(classementPronostiqueurAscJournee.get(0));
+		while (classementPronostiqueurAscJournee.size()!=i && classementPronostiqueurAscJournee.get(i).getPoints()==0){
+			i++;
+		}
+		
+		Integer scoreDernier = classementPronostiqueurAscJournee.get(i).getPoints();
+		mauvaisPronostiqueurs.add(classementPronostiqueurAscJournee.get(i));
+		i++;
 		while (classementPronostiqueurAscJournee.size()!=i && classementPronostiqueurAscJournee.get(i).getPoints()==scoreDernier) {
 			PointsJournee egalite = classementPronostiqueurAscJournee.get(i);
 			mauvaisPronostiqueurs.add(egalite);
