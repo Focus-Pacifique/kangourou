@@ -35,7 +35,7 @@ public class Statistiques extends Controller {
 		Journee premiereJournee = saison.getPremiereJournee();
 		Journee derniereJournee= saison.getDerniereJournee();
 		
-		List<Journee> journeesPassees = Journee.find.where().le("id", derniereJournee.getId()).ge("id", premiereJournee.getId()).lt("dateJournee", maintenant).orderBy().desc("dateJournee").findList();
+		List<Journee> journeesPassees = Journee.find.where().le("id", derniereJournee.getId()).ge("id", premiereJournee.getId()).eq("calcule", 1).orderBy().desc("dateJournee").findList();
 		
 		if (id.equalsIgnoreCase("0")) {
 			idLong = journeesPassees.get(0).id;

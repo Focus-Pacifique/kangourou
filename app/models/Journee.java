@@ -24,6 +24,9 @@ public class Journee extends Model{
 	@Column(name="NomJournee")
 	public String nomJournee;
 
+	@Column(name="NomJavascript")
+	public String nomJavascript;
+
 	@OneToOne
 	@JoinColumn(name="Matche1")
     public Matche matche1;
@@ -81,6 +84,10 @@ public class Journee extends Model{
 
 	public void setNomJournee(String nomJournee) {
 		this.nomJournee = nomJournee;
+	}
+    
+	public String getNomJavascript() {
+		return nomJavascript;
 	}
 	
 	public Boolean getCalcule() {

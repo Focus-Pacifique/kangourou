@@ -34,8 +34,16 @@ public class PointsJournee extends Model{
     	return this.user;
     }
     
+    public void setUser(Utilisateur utilisateur) {
+    	this.user=utilisateur;
+    }
+    
     public Journee getJournee() {
     	return this.journee;
+    }
+    
+    public void setJournee(Journee journee){
+    	this.journee=journee;
     }
     
     public Integer getPoints() {

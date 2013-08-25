@@ -153,6 +153,19 @@ public class Pronostiques extends Controller  {
 				}
 				
 			}
+			
+			for(Utilisateur userTemp: utilisateurs) {
+				List<PointsJournee> pointsJourneeUtilisateur = PointsJournee.find.where().eq("user", userTemp).eq("journee", journee).findList();
+				if(pointsJourneeUtilisateur.isEmpty()) {
+					PointsJournee pointJournee = new PointsJournee();
+					pointJournee.setPoints(0);
+					pointJournee.setScoresCorrects(0);
+					pointJournee.setUser(userTemp);
+					pointJournee.setJournee(journee);
+					pointJournee.save();
+				}
+			}
+			
 			journee.setCalcule(true);
 			journee.update();
 		}

@@ -40,7 +40,10 @@ GET		/profil								controllers.Utilisateurs.profil()
 POST	/profil								controllers.Utilisateurs.updateProfil(pseudo)
 
 # Statistiques
-GET /statistiques							controllers.Statistiques.getStat(id)
+GET		/statistiques						controllers.Statistiques.getStat(id)
+
+# Classement graphique
+GET		/classementGraphique				controllers.ClassementGraphiques.affiche()
 
 # Recette page
 #GET		/recettes							controllers.Recettes.listRecettes()

@@ -1,8 +1,24 @@
 @(user: Utilisateur, pointsSaisons: List[PointsSaison], prochainMatch: Matche, points: Integer)
 
 @main(user, points){
+
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$(".fancy").click(function () {
+		    $.fancybox({
+		        'width': 800,
+		        'height': 600,
+		        'href': this.href,
+		        'type': 'iframe'
+		    });
+		    return false;
+		});
+	});
+	</script>
+	
 	<div class="btn-classement" margin="5px">
-		<center><input id="Afficher_classement" type="button" value="Afficher le classement" class="btn btn-info btn-large" padding="300px" onclick="javascript:afficher('classement');"></center>
+		<center><input id="Afficher_classement" type="button" value="Afficher le classement" class="btn btn-info btn-large" padding="300px" onclick="javascript:afficher('classement');">
+		<a id="fancyGraphique" type="button" class="btn btn-info btn-large fancy" href="classementGraphique">&Eacute;volution du classement</a></center>
 	</div>
 	<div>
 	<br></div>
@@ -63,7 +79,9 @@
 			A toi de jouer @user.getPseudo() !!
 			<br>
 			<img width="40px" src="@routes.Assets.at("images/nouveau.png")"> Acc&eacute;dez &agrave; diff&eacute;rents classement en cliquant
-			<a href="@routes.Statistiques.getStat("0")">ici</a>.
+			<a href="@routes.Statistiques.getStat("0")">ici</a>.<br>
+			<img width="40px" src="@routes.Assets.at("images/nouveau.png")"> Consultez l'&eacute;volution du classement au fil des journ&eacute;es en cliquant
+			<a href="classementGraphique" class="fancy">ici</a>.
 		</div>
 		<div class="news">
 			<center><br>
@@ -131,5 +149,13 @@
 	 		$('#Afficher_classement').attr("value", "Afficher le classement");	
 	 	}
 	 }
+	</script>
+	<script language="javascript">
+    function PopupCentrer(page,largeur,hauteur,options)
+    {
+        var top=(screen.height-hauteur)/2;
+        var left=(screen.width-largeur)/2;
+        window.open(page,"","top="+top+",left="+left+",width="+largeur+",height="+hauteur+","+options);
+    }
 	</script>
 }
