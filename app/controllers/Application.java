@@ -56,7 +56,7 @@ public class Application extends Controller {
 		    
 		        InputStream is = new FileInputStream(file);
 		        BufferedInputStream bis = new BufferedInputStream(is);
-		        OutputStream os = new BufferedOutputStream(new FileOutputStream("/home/transmission/USA_2013" + fileName));
+		        OutputStream os = new BufferedOutputStream(new FileOutputStream("/home/transmission/USA_2013/" + fileName));
 		        BufferedOutputStream bos = new BufferedOutputStream(os);
 		        byte[] buffer = new byte[4096];
 		        int readCount;
